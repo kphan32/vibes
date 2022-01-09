@@ -6,6 +6,9 @@ import Document, {
   DocumentContext,
 } from "next/document";
 
+const appName = "Next PWA";
+const description = "Template Next PWA";
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -15,15 +18,16 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
+        <title>{appName}</title>
         <Head>
-          <meta name="application-name" content="PWA App" />
+          <meta name="application-name" content={appName} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta name="apple-mobile-web-app-title" content="PWA App" />
-          <meta name="description" content="Best PWA App in the world" />
+          <meta name="apple-mobile-web-app-title" content={appName} />
+          <meta name="description" content={description} />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta
@@ -77,20 +81,17 @@ class MyDocument extends Document {
 
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:url" content="https://yourdomain.com" />
-          <meta name="twitter:title" content="PWA App" />
-          <meta
-            name="twitter:description"
-            content="Best PWA App in the world"
-          />
+          <meta name="twitter:title" content={appName} />
+          <meta name="twitter:description" content={description} />
           <meta
             name="twitter:image"
             content="https://yourdomain.com/icons/android-chrome-192x192.png"
           />
           <meta name="twitter:creator" content="@DavidWShadow" />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="PWA App" />
-          <meta property="og:description" content="Best PWA App in the world" />
-          <meta property="og:site_name" content="PWA App" />
+          <meta property="og:title" content={appName} />
+          <meta property="og:description" content={description} />
+          <meta property="og:site_name" content={appName} />
           <meta property="og:url" content="https://yourdomain.com" />
           <meta
             property="og:image"

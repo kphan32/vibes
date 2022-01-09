@@ -1,6 +1,6 @@
 {
-  "name": "PWA App",
-  "short_name": "App",
+  "name": "Next PWA",
+  "short_name": "Next PWA",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png",
