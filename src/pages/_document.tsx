@@ -6,8 +6,8 @@ import Document, {
   DocumentContext,
 } from "next/document";
 
-const appName = "Next PWA";
-const description = "Template Next PWA";
+const appName = "Haptrac";
+const description = "Happiness tracker";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
