@@ -1,7 +1,7 @@
 type Entry = {
   timestamp: Date;
   moodScore: number;
-  description?: string;
+  description: string;
 };
 
 export default Entry;

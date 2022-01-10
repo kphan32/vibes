@@ -14,14 +14,32 @@ const MoodSlider = () => {
         className="w-60 mood-score-slider"
         type="range"
         name="moodScore"
-        min={0}
-        max={10}
+        step={0.5}
+        min={0.0}
+        max={10.0}
       />
       <div className="w-64 flex flex-row justify-between select-none">
         <p className="w-10 text-center text-2xl drop-shadow-md">😔</p>
         <p className="w-10 text-center text-2xl drop-shadow-md">😐</p>
         <p className="w-10 text-center text-2xl drop-shadow-md">😁</p>
       </div>
+    </div>
+  );
+};
+
+const DescriptionField = () => {
+  return (
+    <div className="w-full flex flex-col justify-center items-center">
+      <label htmlFor="description" className="hidden">
+        Description
+      </label>
+      <Field
+        id="description"
+        as="textarea"
+        name="description"
+        className="w-64 h-32 p-2 resize-none rounded-md border-2 shadow-md focus:outline-none focus:ring-2"
+        placeholder="Write your thoughts here..."
+      />
     </div>
   );
 };
@@ -44,15 +62,16 @@ const EntryForm = () => {
         initialValues={{
           timestamp: Date.now(),
           moodScore: 5.0,
-          description: null,
+          description: "",
         }}
         validate={() => []}
         onSubmit={(values, data) => {
           console.info("Submitted", values);
         }}
       >
-        <Form className="w-full flex flex-col justify-center items-center space-y-4">
+        <Form className="w-full flex flex-col justify-center items-center space-y-6">
           <MoodSlider />
+          <DescriptionField />
           <Submit />
         </Form>
       </Formik>
