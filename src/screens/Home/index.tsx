@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import VibeCheckForm from "../../components/VibeCheck";
+import VibeCheckForm from "../VibeCheckPage/components/VibeCheck";
 
 const Home: NextPage = () => {
   const sendNotification = () => {

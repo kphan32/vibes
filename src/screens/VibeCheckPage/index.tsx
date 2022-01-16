@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import VibeCheckForm from "../../components/VibeCheck";
+import VibeCheckForm from "./components/VibeCheck";
 
 const VibeCheckPage: NextPage = () => {
   return (
