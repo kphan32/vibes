@@ -2,14 +2,16 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const useVibeCheckPage = () => {
+  const [pushCreated, setPushCreated] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (submitted) {
-      setTimeout(() => router.push("/"), 1500);
+    if (submitted && !pushCreated) {
+      setTimeout(() => router.push("/"), 500);
+      setPushCreated(true);
     }
-  }, [submitted, router]);
+  }, [submitted, router, pushCreated, setPushCreated]);
 
   return { submitted, setSubmitted };
 };
