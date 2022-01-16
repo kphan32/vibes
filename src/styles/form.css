@@ -7,5 +7,5 @@
 .mood-score-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
 
-  @apply rounded-full w-10 h-6 bg-blue-400 shadow-md cursor-pointer;
+  @apply rounded-full w-10 h-6 bg-blue-400 shadow-md cursor-pointer active:h-8 transition-all;
 }
