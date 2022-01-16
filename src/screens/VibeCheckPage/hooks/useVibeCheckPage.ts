@@ -1,15 +1,15 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const useVibeCheckPage = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (submitted) {
-      setTimeout(() => {
-        console.info("Redirect");
-      }, 1000);
+      setTimeout(() => router.push("/"), 1500);
     }
-  }, [submitted]);
+  }, [submitted, router]);
 
   return { submitted, setSubmitted };
 };
