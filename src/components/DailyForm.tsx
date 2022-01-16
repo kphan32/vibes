@@ -5,7 +5,7 @@ const MoodSlider = () => {
     <div className="flex flex-col justify-center items-center w-full">
       <label
         htmlFor="moodScore"
-        className="text-3xl font-bold pb-2 drop-shadow-md««"
+        className="text-2xl font-bold pb-2 drop-shadow-md««"
       >
         How are you feeling?
       </label>
