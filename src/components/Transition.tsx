@@ -1,3 +1,8 @@
+/**
+ * Adapted from this guide:
+ *  https://dev.to/anxinyang/page-transition-effect-in-nextjs-9ch
+ */
+
 import clsx from "clsx";
 import { FC, useEffect, useState } from "react";
 
