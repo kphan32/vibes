@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import useDailyForm from "./hooks/useDailyForm";
+import useVibeCheckForm from "./hooks/useVibeCheckForm";
 
 const MoodSlider = () => {
   return (
@@ -56,8 +56,8 @@ const Submit = () => {
   );
 };
 
-const DailyForm = () => {
-  const [addEntry] = useDailyForm();
+const VibeCheckForm = () => {
+  const [addEntry] = useVibeCheckForm();
 
   return (
     <div className="flex justify-center w-full">
@@ -82,4 +82,4 @@ const DailyForm = () => {
   );
 };
 
-export default DailyForm;
+export default VibeCheckForm;

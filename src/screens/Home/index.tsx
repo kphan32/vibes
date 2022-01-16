@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import DailyForm from "../../components/DailyForm";
+import VibeCheckForm from "../../components/VibeCheck";
 
 const Home: NextPage = () => {
   const sendNotification = () => {

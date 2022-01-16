@@ -1,7 +1,7 @@
-type DailyEntry = {
+type VibeCheckEntry = {
   timestamp: Date;
   moodScore: number;
   description: string;
 };
 
-export default DailyEntry;
+export default VibeCheckEntry;
