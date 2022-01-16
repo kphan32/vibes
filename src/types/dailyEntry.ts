@@ -1,7 +1,7 @@
-type Entry = {
+type DailyEntry = {
   timestamp: Date;
   moodScore: number;
   description: string;
 };
 
-export default Entry;
+export default DailyEntry;
