@@ -6,8 +6,8 @@ import Document, {
   DocumentContext,
 } from "next/document";
 
-const appName = "Haptrac";
-const description = "Happiness tracker";
+const appName = "Vibes";
+const description = "Track your vibes";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
