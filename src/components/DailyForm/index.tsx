@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from "formik";
+import useDailyForm from "./hooks/useDailyForm";
 
 const MoodSlider = () => {
   return (
@@ -56,17 +57,19 @@ const Submit = () => {
 };
 
 const DailyForm = () => {
+  const [addEntry] = useDailyForm();
+
   return (
     <div className="flex justify-center w-full">
       <Formik
         initialValues={{
-          timestamp: Date.now(),
+          timestamp: new Date(),
           moodScore: 5.0,
           description: "",
         }}
         validate={() => []}
-        onSubmit={(values, data) => {
-          console.info("Submitted", values);
+        onSubmit={(entry, _) => {
+          addEntry(entry);
         }}
       >
         <Form className="w-full flex flex-col justify-center items-center space-y-6">
