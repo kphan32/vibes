@@ -55,7 +55,7 @@ const Submit = () => {
   );
 };
 
-const EntryForm = () => {
+const DailyForm = () => {
   return (
     <div className="flex justify-center w-full">
       <Formik
@@ -79,4 +79,4 @@ const EntryForm = () => {
   );
 };
 
-export default EntryForm;
+export default DailyForm;

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import EntryForm from "../../components/EntryForm";
+import DailyForm from "../../components/DailyForm";
 
 const Home: NextPage = () => {
   const sendNotification = () => {
@@ -27,7 +27,6 @@ const Home: NextPage = () => {
       >
         Click Me!
       </button>
-      <EntryForm />
     </div>
   );
 };
