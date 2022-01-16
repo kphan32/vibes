@@ -7,8 +7,8 @@ const Home: NextPage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center space-y-8 px-4 text-center">
       <div>
-        <p className="text-4xl font-bold drop-shadow-lg">Vibes</p>
-        <p className="mt-2 text-gray-500">
+        <p className="text-5xl font-bold drop-shadow-lg gradient-text">Vibes</p>
+        <p className="mt-2 text-gray-400">
           All data is stored locally, for your privacy
         </p>
       </div>
