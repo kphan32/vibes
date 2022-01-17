@@ -19,7 +19,7 @@ const DrawerItems = () => {
   const router = useRouter();
 
   return (
-    <div className="overflow-scroll scrollbar-hide space-y-2">
+    <div className="overflow-x-hidden overflow-y-scroll  space-y-2">
       {ROUTES.map((route, i) => {
         return (
           <DrawerItem
