@@ -74,7 +74,7 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
         }}
         validate={() => []}
         onSubmit={(entry, _) => {
-          // addEntry(entry);
+          addEntry(entry);
           setSubmitted(true);
         }}
       >
