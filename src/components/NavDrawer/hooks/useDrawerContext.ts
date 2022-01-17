@@ -6,6 +6,10 @@ import DrawerContext, {
 const useDrawerContext = (): DrawerContextInterface => {
   const drawerCtx = useContext(DrawerContext);
 
+  if (drawerCtx === null) {
+    throw "Drawer context is null";
+  }
+
   return drawerCtx;
 };
 
