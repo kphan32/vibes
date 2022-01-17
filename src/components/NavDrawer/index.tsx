@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import DrawerButton from "./components/DrawerButton";
 import useDrawerContext from "./hooks/useDrawerContext";
-import { HiAdjustments } from "react-icons/hi";
 import DrawerItem from "./components/DrawerItem";
 import ROUTES from "../../meta/routes";
 import { useRouter } from "next/router";
@@ -44,12 +43,12 @@ const NavDrawer = () => {
   return (
     <div
       className={clsx(
-        "flex flex-col",
-        "absolute top-0 left-0 z-10",
-        "p-2 pb-10 lg:pb-12",
-        "h-full",
-        "transition-all duration-300",
-        "bg-white shadow-2xl",
+        `flex flex-col
+         h-full
+         absolute top-0 left-0 z-10
+         p-2 pb-10 lg:pb-12
+         bg-white shadow-2xl
+         transition-all duration-300`,
         {
           "w-0": closed,
           "w-72": open,

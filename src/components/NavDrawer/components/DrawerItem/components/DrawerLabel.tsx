@@ -13,10 +13,10 @@ const DrawerLabel: FC<DrawerLabelProps> = ({ label, selected }) => {
   return (
     <p
       className={clsx(
-        "flex-none transition-all",
-        "text-gray-300 text-lg font-bold",
-        "group-hover:text-gray-500",
-        "duration-200",
+        `grow-0 flex-none
+         text-lg font-bold text-gray-300 
+         group-hover:text-gray-500
+         transition-all duration-200`,
         {
           "opacity-0 invisible": closed,
           "opacity-100": open,
