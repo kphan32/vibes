@@ -1,16 +1,29 @@
 import { FC, ReactNode } from "react";
 import NavDrawer from "./NavDrawer";
 import DrawerContextProvider from "./NavDrawer/components/DrawerContextProvider";
+import useDrawerContext from "./NavDrawer/hooks/useDrawerContext";
+
+interface NavDrawerContentProps {
+  children: ReactNode;
+}
+
+const NavDrawerContent: FC<NavDrawerContentProps> = ({ children }) => {
+  const { toggleOpen } = useDrawerContext();
+  return (
+    <div className="flex flex-1" onClick={() => toggleOpen()}>
+      {children}
+    </div>
+  );
+};
 
 interface NavDrawerPageProps {
   children: ReactNode;
 }
-
 const NavDrawerPage: FC<NavDrawerPageProps> = ({ children }) => {
   return (
     <DrawerContextProvider>
       <NavDrawer />
-      <div className="flex flex-1">{children}</div>
+      <NavDrawerContent>{children}</NavDrawerContent>
     </DrawerContextProvider>
   );
 };
