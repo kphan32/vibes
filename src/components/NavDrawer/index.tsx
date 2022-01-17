@@ -15,7 +15,7 @@ const Divider = () => {
 const DrawerItems = () => {
   return (
     <div className="overflow-scroll scrollbar-hide space-y-2">
-      {Array.from(Array(64)).map((_, i) => {
+      {Array.from(Array(4)).map((_, i) => {
         return (
           <DrawerItem key={1} icon={HiAdjustments} label={`Item ${i + 1}`} />
         );
@@ -38,7 +38,7 @@ const NavDrawer = () => {
         "bg-white shadow-2xl",
         {
           "w-0": closed,
-          "w-48": open,
+          "w-72": open,
         }
       )}
     >
