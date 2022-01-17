@@ -8,9 +8,16 @@ interface NavDrawerContentProps {
 }
 
 const NavDrawerContent: FC<NavDrawerContentProps> = ({ children }) => {
-  const { toggleOpen } = useDrawerContext();
+  const { open, toggleOpen } = useDrawerContext();
   return (
-    <div className="flex flex-1" onClick={() => toggleOpen()}>
+    <div
+      className="flex flex-1"
+      onClick={() => {
+        if (open) {
+          toggleOpen();
+        }
+      }}
+    >
       {children}
     </div>
   );
