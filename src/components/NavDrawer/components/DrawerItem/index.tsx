@@ -3,16 +3,19 @@ import useDrawerContext from "../../hooks/useDrawerContext";
 import clsx from "clsx";
 import DrawerIcon, { IconComponentProps } from "./components/DrawerIcon";
 import DrawerLabel from "./components/DrawerLabel";
+import { useRouter } from "next/router";
 
 interface DrawerItemProps {
   icon: FC<IconComponentProps>;
   label: string;
+  path: string;
   onClick?: () => void;
 }
 
-const DrawerItem: FC<DrawerItemProps> = ({ icon, label, onClick }) => {
+const DrawerItem: FC<DrawerItemProps> = ({ icon, label, path, onClick }) => {
+  const router = useRouter();
   const { open, closed } = useDrawerContext();
-  const selected = label.endsWith("1");
+  const selected = router.asPath === path;
 
   return (
     <div
@@ -25,7 +28,7 @@ const DrawerItem: FC<DrawerItemProps> = ({ icon, label, onClick }) => {
         "rounded-lg p-2 select-none",
         "duration-300",
         {
-          "bg-blue-500 shadow-md": selected,
+          "bg-gradient-to-r from-cyan-400 to-blue-400 shadow-md": selected,
           "group hover:cursor-pointer hover:bg-gray-200": !selected,
         }
       )}

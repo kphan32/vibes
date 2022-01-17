@@ -3,6 +3,8 @@ import DrawerButton from "./components/DrawerButton";
 import useDrawerContext from "./hooks/useDrawerContext";
 import { HiAdjustments } from "react-icons/hi";
 import DrawerItem from "./components/DrawerItem";
+import ROUTES from "../../meta/routes";
+import { useRouter } from "next/router";
 
 const Divider = () => {
   return (
@@ -13,11 +15,23 @@ const Divider = () => {
 };
 
 const DrawerItems = () => {
+  const { toggleOpen } = useDrawerContext();
+  const router = useRouter();
+
   return (
     <div className="overflow-scroll scrollbar-hide space-y-2">
-      {Array.from(Array(4)).map((_, i) => {
+      {ROUTES.map((route, i) => {
         return (
-          <DrawerItem key={1} icon={HiAdjustments} label={`Item ${i + 1}`} />
+          <DrawerItem
+            key={i}
+            icon={route.icon}
+            label={route.name}
+            path={route.path}
+            onClick={() => {
+              router.push(route.path);
+              toggleOpen();
+            }}
+          />
         );
       })}
     </div>
