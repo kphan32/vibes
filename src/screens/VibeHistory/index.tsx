@@ -45,7 +45,7 @@ const VibeChecks = () => {
             </div>
             <div className="flex items-center">
               <HiOutlineTrash
-                className={clsx(`w-6 h-6 cursor-pointer`)}
+                className={clsx(`w-6 h-6 mr-2 cursor-pointer`)}
                 onClick={() => {
                   deleteVibeCheck(vibeCheck);
                 }}
