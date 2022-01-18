@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import NavDrawer from "./NavDrawer";
 import DrawerContextProvider from "./NavDrawer/components/DrawerContextProvider";
@@ -8,7 +9,14 @@ interface NavDrawerContentProps {
 }
 
 const NavDrawerContent: FC<NavDrawerContentProps> = ({ children }) => {
-  const { open, toggleOpen } = useDrawerContext();
+  const { open, toggleOpen, setOpen } = useDrawerContext();
+  const router = useRouter();
+
+  // Close on route change
+  router.events?.on("routeChangeStart", () => {
+    setOpen(false);
+  });
+
   return (
     <div
       className="flex flex-1"

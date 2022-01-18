@@ -42,7 +42,6 @@ const Divider = () => {
 };
 
 const DrawerItems = () => {
-  const { toggleOpen } = useDrawerContext();
   const router = useRouter();
 
   return (
@@ -56,7 +55,6 @@ const DrawerItems = () => {
             path={route.path}
             onClick={() => {
               router.push(route.path);
-              toggleOpen();
             }}
           />
         );

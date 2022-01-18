@@ -20,6 +20,7 @@ const DrawerContextProvider: FC<DrawerContextProps> = ({ children }) => {
         open,
         closed: !open,
         toggleOpen,
+        setOpen,
       }}
     >
       {children}
