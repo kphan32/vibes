@@ -7,10 +7,9 @@ const DrawerButton = () => {
 
   return (
     <div
-      className={clsx("flex flex-row place-content-between items-center", {
-        "w-12 h-12": closed,
-        "w-30 h-12": open,
-      })}
+      className={clsx(
+        "flex flex-row place-content-between items-center transition-all"
+      )}
     >
       <div className="relative w-0">
         <p

@@ -22,7 +22,7 @@ const Container: FC = ({ children }) => {
         transition-all duration-300
         `,
         {
-          "w-0": closed,
+          "w-16 shadow-none bg-transparent": closed,
           "w-screen sm:w-64": open,
         }
       )}
@@ -33,8 +33,9 @@ const Container: FC = ({ children }) => {
 };
 
 const Divider = () => {
+  const { closed } = useDrawerContext();
   return (
-    <div className="px-2 pb-4">
+    <div className={clsx("px-2 pb-4", { "opacity-0": closed })}>
       <div className="w-full h-0.5 bg-gray-200" />
     </div>
   );
