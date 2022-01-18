@@ -1,7 +1,7 @@
-type VibeCheckEntry = {
+type VibeCheck = {
   timestamp: Date;
   moodScore: number;
   description: string;
 };
 
-export default VibeCheckEntry;
+export default VibeCheck;

@@ -1,13 +1,13 @@
 import useLocalStorage from "../../../../../hooks/useLocalStorage";
-import VibeCheckEntry from "../../../../../types/vibeCheckEntry";
+import VibeCheck from "../../../../../types/vibeCheck";
 
 const useVibeCheckForm = () => {
-  const [entries, setEntries] = useLocalStorage<VibeCheckEntry[]>(
+  const [entries, setEntries] = useLocalStorage<VibeCheck[]>(
     "vibeCheckEntries",
     []
   );
 
-  const addEntry = (entry: VibeCheckEntry) => setEntries([entry, ...entries]);
+  const addEntry = (entry: VibeCheck) => setEntries([entry, ...entries]);
 
   return [addEntry];
 };
