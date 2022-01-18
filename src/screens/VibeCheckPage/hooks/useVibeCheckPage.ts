@@ -8,7 +8,7 @@ const useVibeCheckPage = () => {
 
   useEffect(() => {
     if (submitted && !pushCreated) {
-      setTimeout(() => router.push("/"), 750);
+      setTimeout(() => router.push("/"), 1000);
       setPushCreated(true);
     }
   }, [submitted, router, pushCreated, setPushCreated]);
