@@ -64,7 +64,7 @@ const VibeHistory: NextPage = () => {
       className={clsx(
         `flex flex-col justify-start items-center
          w-screen h-screen
-         mt-24`
+         pt-24`
       )}
     >
       <p className="text-5xl font-bold">Vibe History</p>
