@@ -6,10 +6,10 @@ const Home: NextPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center space-y-8 px-4 text-center">
-      <div>
-        <p className="text-5xl font-bold drop-shadow-lg gradient-text">Vibes</p>
-        <p className="mt-2 text-gray-400">
-          All data is stored locally, for your privacy
+      <div className="w-64">
+        <p className="text-6xl font-bold gradient-text">Vibes</p>
+        <p className="text-md mt-2 text-gray-400">
+          All data is stored locally on your device for your privacy.
         </p>
       </div>
 
