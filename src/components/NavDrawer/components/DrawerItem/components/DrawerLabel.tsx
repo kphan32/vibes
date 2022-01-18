@@ -13,10 +13,13 @@ const DrawerLabel: FC<DrawerLabelProps> = ({ label, selected }) => {
   return (
     <p
       className={clsx(
-        `grow-0 flex-none
-         text-lg font-bold text-gray-300 
-         group-hover:text-gray-500
-         transition-all duration-200`,
+        // `flex-none` prevents the text from squishing the icons onto
+        // another row during the closing transition.
+        `
+        flex-none grow-0
+        text-lg font-bold
+        text-gray-300 group-hover:text-gray-500
+        transition-color duration-150`,
         {
           "opacity-0 invisible": closed,
           "opacity-100": open,

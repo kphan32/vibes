@@ -4,11 +4,38 @@ import useDrawerContext from "./hooks/useDrawerContext";
 import DrawerItem from "./components/DrawerItem";
 import ROUTES from "../../meta/routes";
 import { useRouter } from "next/router";
+import { FC } from "react";
+
+const Container: FC = ({ children }) => {
+  const { open, closed } = useDrawerContext();
+
+  return (
+    <div
+      className={clsx(
+        `
+        h-full
+        absolute top-0 left-0 z-10
+        p-2 pb-10 lg:pb-12
+        flex flex-col
+        bg-white
+        shadow-2xl
+        transition-all duration-300
+        `,
+        {
+          "w-0": closed,
+          "w-screen sm:w-64": open,
+        }
+      )}
+    >
+      {children}
+    </div>
+  );
+};
 
 const Divider = () => {
   return (
     <div className="px-2 pb-4">
-      <div className="bg-gray-200 w-full h-0.5" />
+      <div className="w-full h-0.5 bg-gray-200" />
     </div>
   );
 };
@@ -18,7 +45,7 @@ const DrawerItems = () => {
   const router = useRouter();
 
   return (
-    <div className="overflow-x-hidden overflow-y-scroll  space-y-2">
+    <div className="space-y-2 overflow-x-hidden overflow-y-scroll">
       {ROUTES.map((route, i) => {
         return (
           <DrawerItem
@@ -38,27 +65,12 @@ const DrawerItems = () => {
 };
 
 const NavDrawer = () => {
-  const { open, closed } = useDrawerContext();
-
   return (
-    <div
-      className={clsx(
-        `flex flex-col
-         h-full
-         absolute top-0 left-0 z-10
-         p-2 pb-10 lg:pb-12
-         bg-white shadow-2xl
-         transition-all duration-300`,
-        {
-          "w-0": closed,
-          "w-72": open,
-        }
-      )}
-    >
+    <Container>
       <DrawerButton />
       <Divider />
       <DrawerItems />
-    </div>
+    </Container>
   );
 };
 

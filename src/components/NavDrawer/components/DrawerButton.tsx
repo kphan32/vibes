@@ -7,25 +7,24 @@ const DrawerButton = () => {
 
   return (
     <div
-      className={clsx(
-        "transition-all duration-300",
-        {
-          "w-12 h-12": closed,
-          "w-30 h-12": open,
-        },
-        "flex flex-row place-content-between items-center"
-      )}
+      className={clsx("flex flex-row place-content-between items-center", {
+        "w-12 h-12": closed,
+        "w-30 h-12": open,
+      })}
     >
       <div className="relative w-0">
         <p
           className={clsx(
-            "p-2",
-            "transition-all",
-            "text-gray-700 text-3xl font-bold",
-            "pointer-events-none",
+            `
+            p-2
+            text-3xl font-bold
+            text-gray-700
+            transition-all
+            pointer-events-none
+            `,
             {
-              "opacity-0 duration-100": closed,
-              "visible duration-100 delay-100": open,
+              "opacity-0 duration-250": closed,
+              "opacity-100 duration-100 delay-250": open,
             }
           )}
         >
@@ -35,9 +34,12 @@ const DrawerButton = () => {
 
       <HiMenu
         className={clsx(
-          "w-12 h-12 hover:cursor-pointer p-2 rounded-lg",
-          "transition-all duration-300",
-          "text-gray-300 hover:text-gray-400"
+          `
+          w-12 h-12 p-2
+          text-gray-300 hover:text-gray-400
+          transition-colors duration-150
+          cursor-pointer
+          `
         )}
         onClick={toggleOpen}
       />

@@ -13,10 +13,12 @@ interface DrawerIconProps {
 const DrawerIcon: FC<DrawerIconProps> = ({ icon, selected }) => {
   return icon({
     className: clsx(
-      `flex-none w-8 h-8
-       text-gray-300
-       group-hover:text-gray-500
-       transition-color duration-200`,
+      `
+      w-8 h-8
+      flex-none
+      text-gray-300 group-hover:text-gray-500
+      transition-color duration-150
+      `,
       {
         "text-gray-100": selected,
       }

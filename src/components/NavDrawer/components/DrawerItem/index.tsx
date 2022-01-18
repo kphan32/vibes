@@ -24,7 +24,7 @@ const DrawerItem: FC<DrawerItemProps> = ({ icon, label, path, onClick }) => {
          p-2
          rounded-lg
          select-none
-         transition-all duration-300`,
+         transition-all duration-150`,
         {
           "opacity-0": closed,
           "bg-gradient-to-r from-cyan-400 to-blue-400 shadow-md": selected,
