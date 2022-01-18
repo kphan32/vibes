@@ -1,16 +1,29 @@
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import useVibeChecks from "../../hooks/useVibeChecks";
+import VibeCheck from "../../types/vibeCheck";
 
 const VibeChecks = () => {
   const router = useRouter();
   const { vibeChecks, deleteVibeCheck } = useVibeChecks();
+  const [deleted, setDeleted] = useState<VibeCheck[]>([]);
 
-  if (vibeChecks.length === 0) {
-    return (
-      <div className="mt-8">
+  const setToDelete = (vibeCheck: VibeCheck) => {
+    setDeleted([vibeCheck, ...deleted]);
+    setTimeout(() => deleteVibeCheck(vibeCheck), 150);
+  };
+
+  return (
+    <div>
+      <div
+        className={clsx(`mt-8`, {
+          "opacity-100 block": vibeChecks.length === 0,
+          "opacity-0 hidden": vibeChecks.length > 0,
+        })}
+      >
         <p
           className="text-gray-400 hover:text-gray-600 transition-all cursor-pointer"
           onClick={() => router.push("/vibe_check")}
@@ -18,44 +31,41 @@ const VibeChecks = () => {
           Click here to take a vibe check
         </p>
       </div>
-    );
-  }
+      <div className="mt-8">
+        {vibeChecks.map((vibeCheck, i) => {
+          const timestamp = new Date(vibeCheck.timestamp);
 
-  return (
-    <div className="mt-4">
-      {vibeChecks.map((vibeCheck, i) => {
-        const timestamp = new Date(vibeCheck.timestamp);
-
-        return (
-          <div
-            className={clsx(
-              `flex flex-row justify-between
-               w-72 m-4 p-2 rounded-md bg-gray-100 drop-shadow-md`
-            )}
-            key={i}
-          >
-            <div>
-              <p className={clsx(`text-sm text-gray-500`)}>
-                {timestamp.toLocaleString("en-US", {
-                  timeStyle: "short",
-                  dateStyle: "short",
-                })}
-              </p>
-              <p>{vibeCheck.description}</p>
+          return (
+            <div
+              className={clsx(
+                `flex flex-row justify-between
+               w-72 m-4 p-3 rounded-md bg-gray-100 drop-shadow-md
+               transition-opacity duration-150`,
+                { "opacity-0": deleted.includes(vibeCheck) }
+              )}
+              key={i}
+            >
+              <div>
+                <p className={clsx(`text-sm text-gray-500`)}>
+                  {timestamp.toLocaleString("en-US", {
+                    timeStyle: "short",
+                    dateStyle: "short",
+                  })}
+                </p>
+                <p>{vibeCheck.description}</p>
+              </div>
+              <div className="flex items-center">
+                <HiOutlineTrash
+                  className={clsx(
+                    `w-6 h-6 cursor-pointer text-gray-400 hover:text-red-500 transition-colors`
+                  )}
+                  onClick={() => setToDelete(vibeCheck)}
+                />
+              </div>
             </div>
-            <div className="flex items-center">
-              <HiOutlineTrash
-                className={clsx(
-                  `w-6 h-6 mr-2 cursor-pointer text-gray-400 hover:text-red-500 transition-colors`
-                )}
-                onClick={() => {
-                  deleteVibeCheck(vibeCheck);
-                }}
-              />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>{" "}
     </div>
   );
 };
