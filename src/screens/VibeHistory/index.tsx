@@ -64,7 +64,7 @@ const VibeHistory: NextPage = () => {
          mt-24`
       )}
     >
-      <p className="text-3xl font-bold drop-shadow-md">Vibe History</p>
+      <p className="text-5xl font-bold">Vibe History</p>
       <VibeChecks />
     </div>
   );
