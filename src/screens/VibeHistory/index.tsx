@@ -10,8 +10,11 @@ const VibeChecks = () => {
 
   if (vibeChecks.length === 0) {
     return (
-      <div className="mt-8 text-gray-400 hover:text-gray-500 transition-all cursor-pointer">
-        <p onClick={() => router.push("/vibe_check")}>
+      <div className="mt-8">
+        <p
+          className="text-gray-400 hover:text-gray-600 transition-all cursor-pointer"
+          onClick={() => router.push("/vibe_check")}
+        >
           Click here to take a vibe check
         </p>
       </div>
