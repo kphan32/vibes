@@ -1,6 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import { Dispatch, FC, SetStateAction } from "react";
-import useVibeCheckForm from "./hooks/useVibeCheckForm";
+import useVibeChecks from "../../../../hooks/useVibeChecks";
 
 const MoodSlider = () => {
   return (
@@ -62,7 +62,7 @@ interface VibeCheckFormProps {
 }
 
 const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
-  const [addEntry] = useVibeCheckForm();
+  const { addVibeCheck } = useVibeChecks();
 
   return (
     <div className="flex justify-center w-full">
@@ -74,7 +74,7 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
         }}
         validate={() => []}
         onSubmit={(entry, _) => {
-          addEntry(entry);
+          addVibeCheck(entry);
           setSubmitted(true);
         }}
       >
