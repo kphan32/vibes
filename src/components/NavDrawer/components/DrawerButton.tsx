@@ -23,8 +23,8 @@ const DrawerButton = () => {
             pointer-events-none
             `,
             {
-              "opacity-0 duration-250": closed,
-              "opacity-100 duration-100 delay-250": open,
+              "opacity-0 duration-100": closed,
+              "opacity-100 duration-250 delay-100": open,
             }
           )}
         >
