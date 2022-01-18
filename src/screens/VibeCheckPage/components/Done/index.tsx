@@ -14,8 +14,8 @@ const Done: FC<DoneProps> = ({ submitted }) => {
         { "opacity-0": !submitted, "opacity-100": submitted }
       )}
     >
-      <p className="text-4xl font-semibold drop-shadow-md">Done</p>
-      <HiOutlineCheckCircle className="w-24 h-24 text-green-500 drop-shadow-md" />
+      <p className="text-4xl font-semibold">Done</p>
+      <HiOutlineCheckCircle className="w-24 h-24 text-green-500" />
     </div>
   );
 };
