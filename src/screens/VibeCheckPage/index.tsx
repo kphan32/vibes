@@ -18,7 +18,7 @@ const VibeCheckPage: NextPage = () => {
           }
         )}
       >
-        <p className="text-3xl font-bold">Vibe Check</p>
+        <p className="text-5xl font-bold">Vibe Check</p>
         <VibeCheckForm setSubmitted={setSubmitted} />
       </div>
       <Done submitted={submitted} />
