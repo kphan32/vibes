@@ -22,7 +22,7 @@ const Container: FC = ({ children }) => {
         transition-all duration-300
         `,
         {
-          "w-16 shadow-none bg-transparent": closed,
+          "w-16 shadow-none": closed,
           "w-screen sm:w-64": open,
         }
       )}
