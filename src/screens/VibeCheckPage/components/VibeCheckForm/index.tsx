@@ -1,7 +1,9 @@
+import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import useVibeChecks from "../../../../hooks/useVibeChecks";
+import moods, { MoodNode } from "../../../../meta/moods";
 
 const MoodSlider = () => {
   return (
@@ -58,7 +60,12 @@ const Submit = () => {
   );
 };
 
-const MoreButton = () => {
+interface MoreButtonProps {
+  showMoods: boolean;
+  toggleShowMoods: () => void;
+}
+
+const MoreButton: FC<MoreButtonProps> = ({ showMoods, toggleShowMoods }) => {
   return (
     <div
       className={`
@@ -68,11 +75,52 @@ const MoreButton = () => {
       transition-all duration-250
       cursor-pointer
       `}
+      onClick={() => toggleShowMoods()}
     >
-      Something more specific?
-      <RiArrowDownSLine className="-my-1" />
+      {!showMoods && (
+        <>
+          Something more specific?
+          <RiArrowDownSLine className="-my-1" />
+        </>
+      )}
+      {showMoods && (
+        <>
+          <RiArrowDownSLine className="-my-1 rotate-180" />
+          Less specific
+        </>
+      )}
     </div>
   );
+};
+
+interface MoodSelectionProps {
+  showMoods: boolean;
+}
+
+const MoodSelection: FC<MoodSelectionProps> = ({ showMoods }) => {
+  const rootMoods = (
+    <div className="flex flex-row flex-wrap w-72 justify-center cursor-pointer">
+      {moods.map((mood, i) => {
+        return (
+          <div
+            key={i}
+            className={`
+            w-32 h-12
+            m-2
+            flex justify-center items-center
+            border-2 rounded-md
+            hover:border-cyan-400
+            transition-color duration-300
+            `}
+          >
+            <p className="select-none">{mood.text}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  return <div className={clsx({ hidden: !showMoods })}>{rootMoods}</div>;
 };
 
 interface VibeCheckFormProps {
@@ -81,6 +129,12 @@ interface VibeCheckFormProps {
 
 const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
+  const [showMoods, setShowMoods] = useState<boolean>(false);
+
+  const toggleShowMoods = useMemo(
+    () => () => setShowMoods((showMoods) => !showMoods),
+    [setShowMoods]
+  );
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -98,10 +152,16 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
           setSubmitted(true);
         }}
       >
-        <Form className="w-full flex flex-col justify-center items-center space-y-8">
+        <Form className="w-full flex flex-col justify-center items-center space-y-8 pb-24">
           <MoodSlider />
+          <div>
+            <MoreButton
+              showMoods={showMoods}
+              toggleShowMoods={toggleShowMoods}
+            />
+            <MoodSelection showMoods={showMoods} />
+          </div>
           <DescriptionField />
-          <MoreButton />
           <Submit />
         </Form>
       </Formik>
