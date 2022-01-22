@@ -65,7 +65,9 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex flex-col w-full h-full">
+      <p className="text-5xl font-bold pb-8">Vibe Check</p>
+
       <Formik
         initialValues={{
           timestamp: new Date(),
