@@ -154,7 +154,7 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
       >
         <Form className="w-full flex flex-col justify-center items-center space-y-8 pb-24">
           <MoodSlider />
-          <div>
+          <div className="space-y-2">
             <MoreButton
               showMoods={showMoods}
               toggleShowMoods={toggleShowMoods}
