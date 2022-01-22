@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from "formik";
 import { Dispatch, FC, SetStateAction } from "react";
+import { RiArrowDownSLine } from "react-icons/ri";
 import useVibeChecks from "../../../../hooks/useVibeChecks";
 
 const MoodSlider = () => {
@@ -57,6 +58,23 @@ const Submit = () => {
   );
 };
 
+const MoreButton = () => {
+  return (
+    <div
+      className={`
+      flex flex-col items-center
+      text-gray-300
+      group hover:text-gray-400
+      transition-all duration-250
+      cursor-pointer
+      `}
+    >
+      Something more specific?
+      <RiArrowDownSLine className="-my-1" />
+    </div>
+  );
+};
+
 interface VibeCheckFormProps {
   setSubmitted: Dispatch<SetStateAction<boolean>>;
 }
@@ -80,9 +98,10 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
           setSubmitted(true);
         }}
       >
-        <Form className="w-full flex flex-col justify-center items-center space-y-6">
+        <Form className="w-full flex flex-col justify-center items-center space-y-8">
           <MoodSlider />
           <DescriptionField />
+          <MoreButton />
           <Submit />
         </Form>
       </Formik>
