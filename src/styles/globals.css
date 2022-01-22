@@ -5,6 +5,8 @@
 /* Disable highlighting of elements on Android */
 * {
   -webkit-tap-highlight-color: transparent;
+
+  @apply select-none;
 }
 
 p,
