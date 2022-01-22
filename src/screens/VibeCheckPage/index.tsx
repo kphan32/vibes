@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { NextPage } from "next";
 import Done from "./components/Done";
-import VibeCheckForm from "./components/VibeCheck";
+import VibeCheckForm from "./components/VibeCheckForm";
 import useVibeCheckPage from "./hooks/useVibeCheckPage";
 
 const VibeCheckPage: NextPage = () => {
