@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
-import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import useVibeChecks from "../../../../hooks/useVibeChecks";
 import moods, { MoodNode } from "../../../../meta/moods";
@@ -140,8 +140,8 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
   const [showMoods, setShowMoods] = useState<boolean>(false);
 
-  const toggleShowMoods = useMemo(
-    () => () => setShowMoods((showMoods) => !showMoods),
+  const toggleShowMoods = useCallback(
+    () => setShowMoods((showMoods) => !showMoods),
     [setShowMoods]
   );
 

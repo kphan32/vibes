@@ -1,13 +1,14 @@
 import clsx from "clsx";
 import DrawerButton from "./components/DrawerButton";
-import useDrawerContext from "./hooks/useDrawerContext";
+import useNavDrawerContext from "./hooks/useNavDrawerContext";
 import DrawerItem from "./components/DrawerItem";
 import ROUTES from "../../meta/routes";
 import { useRouter } from "next/router";
 import { FC } from "react";
+import useCloseOnBack from "./hooks/useCloseOnBack";
 
-const Container: FC = ({ children }) => {
-  const { open, closed } = useDrawerContext();
+const NavDrawerContainer: FC = ({ children }) => {
+  const { open, closed } = useNavDrawerContext();
 
   return (
     <div
@@ -33,7 +34,7 @@ const Container: FC = ({ children }) => {
 };
 
 const Divider = () => {
-  const { closed } = useDrawerContext();
+  const { closed } = useNavDrawerContext();
   return (
     <div className={clsx("px-2 pb-4", { "opacity-0": closed })}>
       <div className="w-full h-0.5 bg-gray-200" />
@@ -41,7 +42,7 @@ const Divider = () => {
   );
 };
 
-const DrawerItems = () => {
+const NavDrawerItems = () => {
   const router = useRouter();
 
   return (
@@ -52,7 +53,7 @@ const DrawerItems = () => {
             key={i}
             icon={route.icon}
             label={route.name}
-            path={route.path}
+            selected={router.asPath === route.path}
             onClick={() => {
               router.push(route.path);
             }}
@@ -64,12 +65,14 @@ const DrawerItems = () => {
 };
 
 const NavDrawer = () => {
+  useCloseOnBack();
+
   return (
-    <Container>
+    <NavDrawerContainer>
       <DrawerButton />
       <Divider />
-      <DrawerItems />
-    </Container>
+      <NavDrawerItems />
+    </NavDrawerContainer>
   );
 };
 

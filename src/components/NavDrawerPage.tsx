@@ -2,25 +2,20 @@ import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import NavDrawer from "./NavDrawer";
 import DrawerContextProvider from "./NavDrawer/components/DrawerContextProvider";
-import useDrawerContext from "./NavDrawer/hooks/useDrawerContext";
+import useNavDrawerContext from "./NavDrawer/hooks/useNavDrawerContext";
 
 interface NavDrawerContentProps {
   children: ReactNode;
 }
 
 const NavDrawerContent: FC<NavDrawerContentProps> = ({ children }) => {
-  const { open, toggleOpen, setOpen } = useDrawerContext();
-  const router = useRouter();
-
-  // Close on route change
-  router.events?.on("routeChangeStart", () => {
-    setOpen(false);
-  });
+  const { open, toggleOpen } = useNavDrawerContext();
 
   return (
     <div
       className="flex flex-1"
       onClick={() => {
+        // Close drawer if content is clicked
         if (open) {
           toggleOpen();
         }

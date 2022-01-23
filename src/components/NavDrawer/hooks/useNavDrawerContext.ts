@@ -3,7 +3,7 @@ import DrawerContext, {
   DrawerContextInterface,
 } from "../context/DrawerContext";
 
-const useDrawerContext = (): DrawerContextInterface => {
+const useNavDrawerContext = (): DrawerContextInterface => {
   const drawerCtx = useContext(DrawerContext);
 
   if (drawerCtx === null) {
@@ -13,4 +13,4 @@ const useDrawerContext = (): DrawerContextInterface => {
   return drawerCtx;
 };
 
-export default useDrawerContext;
+export default useNavDrawerContext;

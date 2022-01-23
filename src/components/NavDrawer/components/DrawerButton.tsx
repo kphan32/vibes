@@ -1,14 +1,17 @@
 import { HiMenu } from "react-icons/hi";
-import useDrawerContext from "../hooks/useDrawerContext";
+import useNavDrawerContext from "../hooks/useNavDrawerContext";
 import clsx from "clsx";
 
 const DrawerButton = () => {
-  const { open, closed, toggleOpen } = useDrawerContext();
+  const { open, closed, toggleOpen } = useNavDrawerContext();
 
   return (
     <div
       className={clsx(
-        "flex flex-row place-content-between items-center transition-all"
+        `
+        flex flex-row place-content-between items-center
+        transition-all
+        `
       )}
     >
       <div className="relative w-0">

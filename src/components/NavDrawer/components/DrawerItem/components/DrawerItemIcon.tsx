@@ -5,12 +5,12 @@ interface IconComponentProps {
   className: string;
 }
 
-interface DrawerIconProps {
+interface DrawerItemIconProps {
   icon: FC<IconComponentProps>;
   selected: boolean;
 }
 
-const DrawerIcon: FC<DrawerIconProps> = ({ icon, selected }) => {
+const DrawerItemIcon: FC<DrawerItemIconProps> = ({ icon, selected }) => {
   return icon({
     className: clsx(
       `
@@ -26,5 +26,5 @@ const DrawerIcon: FC<DrawerIconProps> = ({ icon, selected }) => {
   });
 };
 
-export default DrawerIcon;
+export default DrawerItemIcon;
 export type { IconComponentProps };

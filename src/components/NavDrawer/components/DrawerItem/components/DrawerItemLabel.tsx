@@ -1,14 +1,14 @@
 import { FC } from "react";
 import clsx from "clsx";
-import useDrawerContext from "../../../hooks/useDrawerContext";
+import useNavDrawerContext from "../../../hooks/useNavDrawerContext";
 
-interface DrawerLabelProps {
+interface DrawerItemLabelProps {
   label: string;
   selected: boolean;
 }
 
-const DrawerLabel: FC<DrawerLabelProps> = ({ label, selected }) => {
-  const { open, closed } = useDrawerContext();
+const DrawerItemLabel: FC<DrawerItemLabelProps> = ({ label, selected }) => {
+  const { open, closed } = useNavDrawerContext();
 
   return (
     <p
@@ -32,4 +32,4 @@ const DrawerLabel: FC<DrawerLabelProps> = ({ label, selected }) => {
   );
 };
 
-export default DrawerLabel;
+export default DrawerItemLabel;

@@ -1,41 +1,31 @@
 import { FC } from "react";
-import useDrawerContext from "../../hooks/useDrawerContext";
-import clsx from "clsx";
-import DrawerIcon, { IconComponentProps } from "./components/DrawerIcon";
-import DrawerLabel from "./components/DrawerLabel";
-import { useRouter } from "next/router";
+import DrawerItemIcon, {
+  IconComponentProps,
+} from "./components/DrawerItemIcon";
+import DrawerItemLabel from "./components/DrawerItemLabel";
+import DrawerItemContainer from "./components/DrawerItemContainer";
+import useNavDrawerContext from "../../hooks/useNavDrawerContext";
 
 interface DrawerItemProps {
   icon: FC<IconComponentProps>;
   label: string;
-  path: string;
+  selected: boolean;
   onClick?: () => void;
 }
 
-const DrawerItem: FC<DrawerItemProps> = ({ icon, label, path, onClick }) => {
-  const router = useRouter();
-  const { closed } = useDrawerContext();
-  const selected = router.asPath === path;
+const DrawerItem: FC<DrawerItemProps> = ({
+  icon,
+  label,
+  selected,
+  onClick,
+}) => {
+  const { closed } = useNavDrawerContext();
 
   return (
-    <div
-      className={clsx(
-        `flex flex-row align-start items-center space-x-2
-         p-2
-         rounded-lg
-         select-none
-         transition-all duration-150`,
-        {
-          "opacity-0": closed,
-          "bg-gradient-to-r from-cyan-400 to-blue-400 shadow-md": selected,
-          "group hover:cursor-pointer hover:bg-gray-200": !selected,
-        }
-      )}
-      onClick={onClick}
-    >
-      <DrawerIcon icon={icon} selected={selected} />
-      <DrawerLabel label={label} selected={selected} />
-    </div>
+    <DrawerItemContainer closed={closed} selected={selected} onClick={onClick}>
+      <DrawerItemIcon icon={icon} selected={selected} />
+      <DrawerItemLabel label={label} selected={selected} />
+    </DrawerItemContainer>
   );
 };
 
