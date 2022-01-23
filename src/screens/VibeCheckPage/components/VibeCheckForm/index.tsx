@@ -120,7 +120,16 @@ const MoodSelection: FC<MoodSelectionProps> = ({ showMoods }) => {
     </div>
   );
 
-  return <div className={clsx({ hidden: !showMoods })}>{rootMoods}</div>;
+  return (
+    <div
+      className={clsx("overflow-hidden transition-all duration-500", {
+        "h-0 opacity-0": !showMoods,
+        "h-64 opacity-100": showMoods,
+      })}
+    >
+      {rootMoods}
+    </div>
+  );
 };
 
 interface VibeCheckFormProps {
