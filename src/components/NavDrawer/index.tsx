@@ -46,7 +46,7 @@ const NavDrawerItems = () => {
   const router = useRouter();
 
   return (
-    <div className="space-y-2 overflow-x-hidden overflow-y-scroll">
+    <div className="space-y-2 overflow-x-hidden">
       {ROUTES.map((route, i) => {
         return (
           <DrawerItem
