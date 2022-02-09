@@ -6,6 +6,16 @@ import { HiOutlineTrash } from "react-icons/hi";
 import useVibeChecks from "../../hooks/useVibeChecks";
 import VibeCheck from "../../types/vibeCheck";
 
+const emojiFor = (moodScore: number) => {
+  if (moodScore < 0.33) {
+    return "😔";
+  } else if (moodScore < 0.66) {
+    return "😐";
+  } else {
+    return "😁";
+  }
+};
+
 interface VibeCheckEntryProps {
   key: number;
   vibeCheck: VibeCheck;
@@ -24,21 +34,28 @@ const VibeCheckEntry: FC<VibeCheckEntryProps> = ({
   return (
     <div
       className={clsx(
-        `flex flex-row justify-between
-               w-72 m-4 p-3 rounded-md bg-gray-100 drop-shadow-md
-               transition-opacity duration-150`,
+        `
+        flex flex-row justify-between items-center
+        w-72 m-4 p-3 rounded-md bg-gray-100 drop-shadow-md
+        transition-opacity duration-150
+        `,
         { "opacity-0": deleted.includes(vibeCheck) }
       )}
       key={key}
     >
-      <div>
-        <p className={clsx(`text-sm text-gray-500`)}>
-          {timestamp.toLocaleString("en-US", {
-            timeStyle: "short",
-            dateStyle: "short",
-          })}
+      <div className="flex flex-row space-x-2">
+        <p className="h-12 text-4xl self-start">
+          {emojiFor(vibeCheck.moodScore)}
         </p>
-        <p>{vibeCheck.description}</p>
+        <div>
+          <p className={clsx(`text-sm text-gray-500`)}>
+            {timestamp.toLocaleString("en-US", {
+              timeStyle: "short",
+              dateStyle: "short",
+            })}
+          </p>
+          <p className="w-40 break-all truncate">{vibeCheck.description}</p>
+        </div>
       </div>
       <div className="flex items-center">
         <HiOutlineTrash
