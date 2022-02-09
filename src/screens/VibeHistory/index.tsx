@@ -18,6 +18,7 @@ const emojiFor = (moodScore: number) => {
 
 interface VibeCheckEntryProps {
   key: number;
+  openVibeCheck: (vibeCheck: VibeCheck) => void;
   vibeCheck: VibeCheck;
   deleted: VibeCheck[];
   setToDelete: (vibeCheck: VibeCheck) => void;
@@ -25,6 +26,7 @@ interface VibeCheckEntryProps {
 
 const VibeCheckEntry: FC<VibeCheckEntryProps> = ({
   key,
+  openVibeCheck,
   vibeCheck,
   deleted,
   setToDelete,
@@ -37,11 +39,14 @@ const VibeCheckEntry: FC<VibeCheckEntryProps> = ({
         `
         flex flex-row justify-between items-center
         w-72 m-4 p-3 rounded-md bg-gray-100 drop-shadow-md
-        transition-opacity duration-150
+        cursor-pointer
+        hover:ring-2 hover:drop-shadow-lg
+        transition-all duration-300
         `,
         { "opacity-0": deleted.includes(vibeCheck) }
       )}
       key={key}
+      onClick={() => openVibeCheck(vibeCheck)}
     >
       <div className="flex flex-row space-x-2">
         <p className="h-12 text-4xl self-start">
@@ -74,6 +79,8 @@ const VibeChecks = () => {
   const { vibeChecks, deleteVibeCheck } = useVibeChecks();
   const [deleted, setDeleted] = useState<VibeCheck[]>([]);
 
+  const [openVibeCheck, setOpenVibeCheck] = useState<VibeCheck | null>(null);
+
   const setToDelete = (vibeCheck: VibeCheck) => {
     setDeleted([vibeCheck, ...deleted]);
     setTimeout(() => deleteVibeCheck(vibeCheck), 150);
@@ -98,6 +105,7 @@ const VibeChecks = () => {
         {vibeChecks.map((vibeCheck, i) => (
           <VibeCheckEntry
             key={i}
+            openVibeCheck={setOpenVibeCheck}
             vibeCheck={vibeCheck}
             deleted={deleted}
             setToDelete={setToDelete}
