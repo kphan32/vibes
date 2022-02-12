@@ -4,6 +4,8 @@ import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import useVibeChecks from "../../../../hooks/useVibeChecks";
 import moods, { MoodNode } from "../../../../meta/moods";
+import VibeCheck from "../../../../types/vibeCheck";
+import MoodSelection from "./MoodSelection";
 
 const MoodSlider = () => {
   return (
@@ -93,50 +95,18 @@ const MoreButton: FC<MoreButtonProps> = ({ showMoods, toggleShowMoods }) => {
   );
 };
 
-interface MoodSelectionProps {
-  showMoods: boolean;
-}
-
-const MoodSelection: FC<MoodSelectionProps> = ({ showMoods }) => {
-  const rootMoods = (
-    <div className="flex flex-row flex-wrap w-72 justify-center cursor-pointer">
-      {moods.map((mood, i) => {
-        return (
-          <div
-            key={i}
-            className={`
-            w-32 h-12
-            m-2
-            flex justify-center items-center
-            border-2 rounded-md
-            hover:border-cyan-400
-            transition-color duration-300
-            `}
-          >
-            <p className="select-none">{mood.text}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-
-  return (
-    <div
-      className={clsx("overflow-hidden transition-all duration-500", {
-        "h-0 opacity-0": !showMoods,
-        "h-64 opacity-100": showMoods,
-      })}
-    >
-      {rootMoods}
-    </div>
-  );
-};
-
 interface VibeCheckFormProps {
   setSubmitted: Dispatch<SetStateAction<boolean>>;
 }
 
 const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
+  const initialValues: VibeCheck = {
+    timestamp: new Date(),
+    moodScore: 5.0,
+    description: "",
+    mood: "",
+  };
+
   const { addVibeCheck } = useVibeChecks();
   const [showMoods, setShowMoods] = useState<boolean>(false);
 
@@ -145,18 +115,18 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
     [setShowMoods]
   );
 
+  const [mood, setMood] = useState<string | null>(null);
+
   return (
     <div className="flex flex-col w-full h-full">
       <p className="text-5xl font-bold pb-8">Vibe Check</p>
 
       <Formik
-        initialValues={{
-          timestamp: new Date(),
-          moodScore: 5.0,
-          description: "",
-        }}
+        initialValues={initialValues}
         validate={() => []}
         onSubmit={(entry, _) => {
+          entry.mood = mood;
+
           addVibeCheck(entry);
           setSubmitted(true);
         }}
@@ -168,7 +138,7 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
               showMoods={showMoods}
               toggleShowMoods={toggleShowMoods}
             />
-            <MoodSelection showMoods={showMoods} />
+            <MoodSelection showMoods={showMoods} setMood={setMood} />
           </div> */}
           <DescriptionField />
           <Submit />
