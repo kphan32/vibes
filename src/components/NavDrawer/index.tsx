@@ -15,7 +15,7 @@ const NavDrawerContainer: FC = ({ children }) => {
       className={clsx(
         `
         h-full
-        absolute top-0 left-0 z-10
+        fixed top-0 left-0 z-10
         p-2 pb-10 lg:pb-12
         flex flex-col
         bg-white
