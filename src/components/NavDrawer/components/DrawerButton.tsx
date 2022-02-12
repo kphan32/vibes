@@ -11,6 +11,7 @@ const DrawerButton = () => {
         `
         flex flex-row place-content-between items-center
         transition-all
+        pointer-events-auto
         `
       )}
     >

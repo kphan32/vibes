@@ -23,7 +23,7 @@ const NavDrawerContainer: FC = ({ children }) => {
         transition-all duration-300
         `,
         {
-          "w-16 shadow-none bg-transparent": closed,
+          "w-16 shadow-none bg-transparent pointer-events-none": closed,
           "w-screen sm:w-64": open,
         }
       )}
@@ -43,15 +43,10 @@ const Divider = () => {
 };
 
 const NavDrawerItems = () => {
-  const { closed } = useNavDrawerContext();
   const router = useRouter();
 
   return (
-    <div
-      className={clsx("space-y-2 overflow-x-hidden", {
-        "pointer-events-none": closed,
-      })}
-    >
+    <div className="space-y-2 overflow-x-hidden">
       {ROUTES.map((route, i) => {
         return (
           <DrawerItem
