@@ -43,10 +43,15 @@ const Divider = () => {
 };
 
 const NavDrawerItems = () => {
+  const { closed } = useNavDrawerContext();
   const router = useRouter();
 
   return (
-    <div className="space-y-2 overflow-x-hidden">
+    <div
+      className={clsx("space-y-2 overflow-x-hidden", {
+        "pointer-events-none": closed,
+      })}
+    >
       {ROUTES.map((route, i) => {
         return (
           <DrawerItem
