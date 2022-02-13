@@ -1,21 +1,12 @@
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import useVibeChecks from "../../hooks/useVibeChecks";
 import VibeCheck from "../../types/vibeCheck";
-import EditVibeCheck from "./components/EditVibeCheck";
-
-const emojiFor = (moodScore: number) => {
-  if (moodScore < 0.33) {
-    return "😔";
-  } else if (moodScore < 0.66) {
-    return "😐";
-  } else {
-    return "😁";
-  }
-};
+import { emojiFor } from "../../utils/emoji";
+import ViewVibeCheck from "./components/ViewVibeCheck";
 
 interface VibeCheckEntryProps {
   key: number;
@@ -79,18 +70,19 @@ const VibeCheckEntry: FC<VibeCheckEntryProps> = ({
 };
 
 interface VibeChecksProps {
+  vibeChecks: VibeCheck[];
+  deleted: VibeCheck[];
+  setToDelete: (vibeCheck: VibeCheck) => void;
   selectVibeCheck: (vibeCheck: VibeCheck) => void;
 }
 
-const VibeChecks: FC<VibeChecksProps> = ({ selectVibeCheck }) => {
+const VibeChecks: FC<VibeChecksProps> = ({
+  vibeChecks,
+  deleted,
+  setToDelete,
+  selectVibeCheck,
+}) => {
   const router = useRouter();
-  const { vibeChecks, deleteVibeCheck } = useVibeChecks();
-  const [deleted, setDeleted] = useState<VibeCheck[]>([]);
-
-  const setToDelete = (vibeCheck: VibeCheck) => {
-    setDeleted([vibeCheck, ...deleted]);
-    setTimeout(() => deleteVibeCheck(vibeCheck), 150);
-  };
 
   return (
     <div>
@@ -123,6 +115,14 @@ const VibeChecks: FC<VibeChecksProps> = ({ selectVibeCheck }) => {
 };
 
 const VibeHistory: NextPage = () => {
+  const { vibeChecks, deleteVibeCheck } = useVibeChecks();
+  const [deleted, setDeleted] = useState<VibeCheck[]>([]);
+
+  const setToDelete = (vibeCheck: VibeCheck) => {
+    setDeleted([vibeCheck, ...deleted]);
+    setTimeout(() => deleteVibeCheck(vibeCheck), 150);
+  };
+
   const [openVibeCheck, setOpenVibeCheck] = useState<VibeCheck | null>(null);
 
   return (
@@ -134,10 +134,16 @@ const VibeHistory: NextPage = () => {
       )}
     >
       <p className="text-5xl font-bold">Vibe History</p>
-      <VibeChecks selectVibeCheck={setOpenVibeCheck} />
-      <EditVibeCheck
+      <VibeChecks
+        vibeChecks={vibeChecks}
+        deleted={deleted}
+        selectVibeCheck={setOpenVibeCheck}
+        setToDelete={setToDelete}
+      />
+      <ViewVibeCheck
         vibeCheck={openVibeCheck}
         closeVibeCheck={() => setOpenVibeCheck(null)}
+        setToDelete={setToDelete}
       />
     </div>
   );
