@@ -13,7 +13,7 @@ const Card: FC<CardProps> = ({ children }) => {
     <div
       className={clsx(`
         flex-1
-        m-4
+        m-10
         p-4
         ring-2
         rounded-lg
