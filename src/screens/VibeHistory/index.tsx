@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import useVibeChecks from "../../hooks/useVibeChecks";
 import VibeCheck from "../../types/vibeCheck";
+import EditVibeCheck from "./components/EditVibeCheck";
 
 const emojiFor = (moodScore: number) => {
   if (moodScore < 0.33) {
@@ -67,19 +68,24 @@ const VibeCheckEntry: FC<VibeCheckEntryProps> = ({
           className={clsx(
             `w-6 h-6 cursor-pointer text-gray-400 hover:text-red-500 transition-colors`
           )}
-          onClick={() => setToDelete(vibeCheck)}
+          onClick={(e) => {
+            setToDelete(vibeCheck);
+            e.stopPropagation();
+          }}
         />
       </div>
     </div>
   );
 };
 
-const VibeChecks = () => {
+interface VibeChecksProps {
+  selectVibeCheck: (vibeCheck: VibeCheck) => void;
+}
+
+const VibeChecks: FC<VibeChecksProps> = ({ selectVibeCheck }) => {
   const router = useRouter();
   const { vibeChecks, deleteVibeCheck } = useVibeChecks();
   const [deleted, setDeleted] = useState<VibeCheck[]>([]);
-
-  const [openVibeCheck, setOpenVibeCheck] = useState<VibeCheck | null>(null);
 
   const setToDelete = (vibeCheck: VibeCheck) => {
     setDeleted([vibeCheck, ...deleted]);
@@ -105,7 +111,7 @@ const VibeChecks = () => {
         {vibeChecks.map((vibeCheck, i) => (
           <VibeCheckEntry
             key={i}
-            openVibeCheck={setOpenVibeCheck}
+            openVibeCheck={selectVibeCheck}
             vibeCheck={vibeCheck}
             deleted={deleted}
             setToDelete={setToDelete}
@@ -117,6 +123,8 @@ const VibeChecks = () => {
 };
 
 const VibeHistory: NextPage = () => {
+  const [openVibeCheck, setOpenVibeCheck] = useState<VibeCheck | null>(null);
+
   return (
     <div
       className={clsx(
@@ -126,7 +134,11 @@ const VibeHistory: NextPage = () => {
       )}
     >
       <p className="text-5xl font-bold">Vibe History</p>
-      <VibeChecks />
+      <VibeChecks selectVibeCheck={setOpenVibeCheck} />
+      <EditVibeCheck
+        vibeCheck={openVibeCheck}
+        closeVibeCheck={() => setOpenVibeCheck(null)}
+      />
     </div>
   );
 };
