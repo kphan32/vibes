@@ -31,6 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .sendNotification(
         subscriptionBody,
         JSON.stringify({
+          type: "reminder",
           title: "Time for a Vibe Check!",
           message: "How are you feeling?",
           url: "/vibe_check",
