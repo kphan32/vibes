@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     subscriptions.map((subscription) => {
       const subscriptionBody = JSON.parse(subscription.subscriptionJson);
 
-      webpush
+      return webpush
         .sendNotification(
           subscriptionBody,
           JSON.stringify({
