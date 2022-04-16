@@ -27,7 +27,8 @@ const DrawerItemContainer: FC<DrawerItemContainerProps> = ({
       `,
         {
           "opacity-0": closed,
-          "bg-gradient-to-r from-cyan-400 to-blue-400 shadow-md": selected,
+          "bg-gradient-to-r from-cyan-400 to-blue-400 shadow-md pointer-events-none":
+            selected,
           "group hover:cursor-pointer hover:bg-gray-200": !selected,
         }
       )}
