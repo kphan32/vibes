@@ -1,9 +1,13 @@
 import type { NextPage } from "next";
 import useHome from "./hooks/useHome";
 import tw from "tailwind-styled-components";
+import useRequestPermissions from "./hooks/useRequestPermissions";
 
 const Home: NextPage = () => {
   const { gotoVibeCheck } = useHome();
+
+  const { notificationPermissionStatus: notificationPermStatus } =
+    useRequestPermissions();
 
   return (
     <Container>
@@ -17,6 +21,12 @@ const Home: NextPage = () => {
       <VibeCheckButton onClick={gotoVibeCheck}>
         Take a Vibe Check
       </VibeCheckButton>
+
+      {notificationPermStatus === "denied" && (
+        <ErrorMessage>
+          Please allow notifications to receive reminders
+        </ErrorMessage>
+      )}
     </Container>
   );
 };
@@ -51,6 +61,13 @@ const Subtitle = tw.p`
 
   text-md
   text-gray-400
+`;
+
+const ErrorMessage = tw.p`
+  mt-4
+
+  text-sm
+  text-red-400
 `;
 
 const VibeCheckButton = tw.button`
