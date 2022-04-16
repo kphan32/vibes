@@ -43,9 +43,10 @@ self.addEventListener("push", function (event) {
   const data = JSON.parse(event.data.text());
 
   if (data.type === "reminder") {
-    console.info("sending reminder? ", shouldSendReminderNow());
     // Short circuit if not enabled
     if (!shouldSendReminderNow()) return;
+
+    console.info("Pushing reminder");
 
     const body = {
       body: data.message,
