@@ -1,26 +1,75 @@
 import type { NextPage } from "next";
 import useHome from "./hooks/useHome";
+import tw from "tailwind-styled-components";
 
 const Home: NextPage = () => {
   const { gotoVibeCheck } = useHome();
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center space-y-8 px-4 text-center">
-      <div className="w-64">
-        <p className="text-6xl font-bold gradient-text">Vibes</p>
-        <p className="text-md mt-2 text-gray-400">
+    <Container>
+      <GreetingContainer>
+        <Title>Vibes</Title>
+        <Subtitle>
           All data is stored locally on your device for your privacy.
-        </p>
-      </div>
+        </Subtitle>
+      </GreetingContainer>
 
-      <button
-        className="bg-gradient-to-r from-cyan-400 to-blue-400 text-white px-4 py-2 rounded-md text-lg drop-shadow-md hover:drop-shadow-lg transition-all"
-        onClick={gotoVibeCheck}
-      >
+      <VibeCheckButton onClick={gotoVibeCheck}>
         Take a Vibe Check
-      </button>
-    </div>
+      </VibeCheckButton>
+    </Container>
   );
 };
+
+const Container = tw.div`
+  w-screen
+  h-screen
+
+  flex
+  flex-col
+  justify-center
+  items-center
+  space-y-8
+
+  px-4
+  
+  text-center
+`;
+
+const GreetingContainer = tw.div`
+  w-64
+`;
+
+const Title = tw.p`
+  text-6xl
+  font-bold
+  gradient-text
+`;
+
+const Subtitle = tw.p`
+  mt-2
+
+  text-md
+  text-gray-400
+`;
+
+const VibeCheckButton = tw.button`
+  px-4
+  py-2
+
+  bg-gradient-to-r
+  from-cyan-400
+  to-blue-400
+
+  text-white
+
+  rounded-md
+  text-lg
+
+  drop-shadow-md
+  hover:drop-shadow-lg
+
+  transition-all
+`;
 
 export default Home;
