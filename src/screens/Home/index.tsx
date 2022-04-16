@@ -2,6 +2,11 @@ import type { NextPage } from "next";
 import useHome from "./hooks/useHome";
 import tw from "tailwind-styled-components";
 import useRequestPermissions from "./hooks/useRequestPermissions";
+import {
+  GradientButton,
+  GradientTitle,
+  Subtitle,
+} from "../../components/common";
 
 const Home: NextPage = () => {
   const { gotoVibeCheck } = useHome();
@@ -12,15 +17,13 @@ const Home: NextPage = () => {
   return (
     <Container>
       <GreetingContainer>
-        <Title>Vibes</Title>
+        <GradientTitle>Vibes</GradientTitle>
         <Subtitle>
           All data is stored locally on your device for your privacy.
         </Subtitle>
       </GreetingContainer>
 
-      <VibeCheckButton onClick={gotoVibeCheck}>
-        Take a Vibe Check
-      </VibeCheckButton>
+      <GradientButton onClick={gotoVibeCheck}>Take a Vibe Check</GradientButton>
 
       {notificationPermStatus === "denied" && (
         <ErrorMessage>
@@ -48,19 +51,6 @@ const Container = tw.div`
 
 const GreetingContainer = tw.div`
   w-64
-`;
-
-const Title = tw.p`
-  text-6xl
-  font-bold
-  gradient-text
-`;
-
-const Subtitle = tw.p`
-  mt-2
-
-  text-md
-  text-gray-400
 `;
 
 const ErrorMessage = tw.p`
