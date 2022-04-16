@@ -10,7 +10,6 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY!!
 );
 
-// TODO send actual messages
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).end();
 
