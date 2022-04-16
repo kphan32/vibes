@@ -1,4 +1,10 @@
 "use strict";
+
+let reminderSettings = {
+  enabled: false,
+  timesEnabled: [],
+};
+
 // Get closest current hour with period attached (ie '12AM' or)
 const getRoundedCurrentHour = () => {
   const date = new Date();
@@ -18,26 +24,26 @@ const getRoundedCurrentHour = () => {
   return `${hour}${period}`;
 };
 
-const getTimesEnabled = () => {
-  const reminderSettings = JSON.parse(
-    localStorage.getItem("reminderSettings")
-  ) || {
-    enabled: false,
-  };
-
-  if (!reminderSettings.enabled) return [];
-
-  return reminderSettings.timesEnabled || [];
-};
-
 const shouldSendReminderNow = () => {
-  return getTimesEnabled().includes(getRoundedCurrentHour());
+  return (
+    reminderSettings.enabled &&
+    reminderSettings.timesEnabled.includes(getRoundedCurrentHour())
+  );
 };
+
+self.addEventListener("message", function (event) {
+  const message = event.data;
+
+  if (message.type === "syncReminderSettings") {
+    reminderSettings = JSON.parse(message.data);
+  }
+});
 
 self.addEventListener("push", function (event) {
   const data = JSON.parse(event.data.text());
 
   if (data.type === "reminder") {
+    console.info("sending reminder? ", shouldSendReminderNow());
     // Short circuit if not enabled
     if (!shouldSendReminderNow()) return;
 

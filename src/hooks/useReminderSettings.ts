@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "./useLocalStorage";
+import useSyncReminderSettings from "./useSyncReminderSettings";
 
 const useReminderSettings = () => {
+  const { syncReminderSettings } = useSyncReminderSettings();
+
   const [reminderSettings, setReminderSettings] =
     useLocalStorage<ReminderSettings>("reminderSettings", {
       enabled: false,
@@ -15,7 +18,9 @@ const useReminderSettings = () => {
   useEffect(() => {
     setRemindersEnabled(reminderSettings.enabled);
     setTimesEnabled(reminderSettings.timesEnabled);
-  }, [reminderSettings, timesEnabled]);
+
+    syncReminderSettings();
+  }, [reminderSettings, timesEnabled, syncReminderSettings]);
 
   // Because the local storage hook is not triggering renders correctly,
   // it's values need to be broken down into other hooks. This means that
