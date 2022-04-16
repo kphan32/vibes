@@ -56,7 +56,14 @@ self.addEventListener("push", function (event) {
       },
     };
 
-    event.waitUntil(self.registration.showNotification(data.title, body));
+    event.waitUntil(
+      new Promise((resolve, _) => {
+        self.registration
+          .showNotification(data.title, body)
+          .then((resp) => resolve(resp))
+          .catch((e) => resolve(e));
+      })
+    );
   }
 });
 
