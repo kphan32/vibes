@@ -50,8 +50,6 @@ const useReminderSettings = () => {
     [reminderSettings, setReminderSettings]
   );
 
-  useEffect(() => console.info(reminderSettings), [reminderSettings]);
-
   return {
     enabled: remindersEnabled,
     timeEnabled,
