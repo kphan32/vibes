@@ -38,12 +38,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         )
         .then((resp) => {
           console.info(
-            `Pushed to subscription ${subscription.id}: ${resp.statusCode}`
+            `Pushed to subscription #${subscription.id}, returned code ${resp.statusCode}`
           );
         })
         .catch((e) => {
           if (e instanceof Error) {
-            console.error(`Error sending push notification: ${e.message}`);
+            console.error(
+              `Error pushing to subscription #${subscription.id}: ${e.message}`
+            );
           }
         });
     })
