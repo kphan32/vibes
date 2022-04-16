@@ -19,8 +19,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     subscriptions = await prismaClient.subscription.findMany();
   } catch (e) {
-    console.error("Error querying for subscriptions");
-    console.error(e.message);
+    if (e instanceof Error) {
+      console.error("Error querying for subscriptions");
+      console.error(e.message);
+    }
   }
 
   subscriptions.forEach((subscription) => {
@@ -35,9 +37,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           url: "/vibe_check",
         })
       )
-      .catch((e) =>
-        console.error(`Error sending push notification: ${e.message}`)
-      );
+      .catch((e) => {
+        if (e instanceof Error) {
+          console.error(`Error sending push notification: ${e.message}`);
+        }
+      });
   });
 };
 
