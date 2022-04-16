@@ -102,7 +102,7 @@ const RemindersHeaderContainer = tw.div`
 `;
 
 const ReminderTimesContainer = tw.div`
-  ${({ disabled }) =>
+  ${({ disabled }: DisableProp) =>
     disabled ? "opacity-50 pointer-events-none" : "opacity-100"}
 
   w-full
@@ -134,7 +134,7 @@ const ReminderTimesPMContainer = tw.div`
 `;
 
 const ReminderTimeOption = tw.p`
-  ${({ disabled }) => (disabled ? "" : "bg-gray-300")}
+  ${({ disabled }: DisableProp) => (disabled ? "" : "bg-gray-300")}
 
   py-3
 
@@ -153,5 +153,9 @@ const ReminderPMTimeOption = tw(ReminderTimeOption)`
   first:rounded-tr-lg
   last:rounded-br-lg
 `;
+
+interface DisableProp {
+  disabled: boolean;
+}
 
 export default Settings;
