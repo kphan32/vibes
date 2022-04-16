@@ -11,8 +11,6 @@ webpush.setVapidDetails(
 );
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).end();
-
   let subscriptions: Subscription[] = [];
 
   try {
@@ -24,25 +22,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  subscriptions.forEach((subscription) => {
-    const subscriptionBody = JSON.parse(subscription.subscriptionJson);
+  await Promise.all(
+    subscriptions.map((subscription) => {
+      const subscriptionBody = JSON.parse(subscription.subscriptionJson);
 
-    webpush
-      .sendNotification(
-        subscriptionBody,
-        JSON.stringify({
-          type: "reminder",
-          title: "Time for a Vibe Check!",
-          message: "How are you feeling?",
-          url: "/vibe_check",
+      webpush
+        .sendNotification(
+          subscriptionBody,
+          JSON.stringify({
+            type: "reminder",
+            title: "Time for a Vibe Check!",
+            message: "How are you feeling?",
+            url: "/vibe_check",
+          })
+        )
+        .then((resp) => {
+          console.info(
+            `Pushed to subscription ${subscription.id}: ${resp.statusCode}`
+          );
         })
-      )
-      .catch((e) => {
-        if (e instanceof Error) {
-          console.error(`Error sending push notification: ${e.message}`);
-        }
-      });
-  });
+        .catch((e) => {
+          if (e instanceof Error) {
+            console.error(`Error sending push notification: ${e.message}`);
+          }
+        });
+    })
+  );
+
+  res.status(200).end();
 };
 
 export default handler;
