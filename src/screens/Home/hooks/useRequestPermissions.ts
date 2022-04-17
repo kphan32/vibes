@@ -31,7 +31,7 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
 
       // Create or find push subscription
       const subscription = await sw.pushManager.subscribe({
-        userVisibleOnly: false,
+        userVisibleOnly: true,
         applicationServerKey: vapidPublicKey,
       });
       if (!subscription) console.error("No subscription found");
