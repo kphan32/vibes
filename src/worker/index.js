@@ -44,9 +44,7 @@ self.addEventListener("push", function (event) {
 
   if (data.type === "reminder") {
     // Short circuit if not enabled
-    if (!shouldSendReminderNow()) return;
-
-    console.info("Pushing reminder");
+    if (!shouldSendReminderNow()) return event.waitUntil(new Promise(() => {}));
 
     const body = {
       body: data.message,
@@ -56,15 +54,15 @@ self.addEventListener("push", function (event) {
       },
     };
 
-    event.waitUntil(
-      new Promise((resolve, _) => {
-        self.registration
-          .showNotification(data.title, body)
-          .then((resp) => resolve(resp))
-          .catch((e) => resolve(e));
-      })
+    return event.waitUntil(
+      self.registration
+        .showNotification(data.title, body)
+        .then((resp) => resolve(resp))
+        .catch((e) => resolve(e))
     );
   }
+
+  throw `Invalid push type ${data.type}`;
 });
 
 self.addEventListener("notificationclick", function (event) {
