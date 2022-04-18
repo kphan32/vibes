@@ -11,11 +11,29 @@ datasource db {
 }
 
 model Subscription {
-  id        Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
+  endpoint           String @unique
+  subscriptionString String @map("subscription_string")
+
+  reminderTimers ReminderTime[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  subscriptionJson String @unique @map("subscription_json")
-
   @@map("subscriptions")
+}
+
+model ReminderTime {
+  id Int @id @default(autoincrement())
+
+  subscription         Subscription @relation(fields: [subscriptionEndpoint], references: [endpoint])
+  subscriptionEndpoint String       @map("subscription_endpoint")
+
+  hour Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("reminder_times")
 }
