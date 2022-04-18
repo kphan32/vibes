@@ -19,7 +19,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const response = {
         remindersEnabled: subscription.remindersEnabled,
-        reminderTimes: subscription.reminderTimes,
+        hoursEnabled: subscription.reminderTimes
+          .map((reminderTime) => reminderTime.hour)
+          .sort(),
       };
 
       return res.status(200).json(response);
