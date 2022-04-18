@@ -1,14 +1,27 @@
 import { useEffect, useState } from "react";
-import base64ToUint8Array from "../../../utils/base64_to_uint8_array";
+import base64ToUint8Array from "../utils/base64_to_uint8_array";
 
 const vapidPublicKey = base64ToUint8Array(
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!!
 );
 
-const useRequestPermissions = (): UseRequestPermissionsReturn => {
+const useServiceWorker = (): UseRequestPermissionsReturn => {
+  const [serviceWorkerRegistration, setServiceWorkerRegistration] =
+    useState<ServiceWorkerRegistration | null>(null);
+
   const [notificationPermStatus, setNotificationPermStatus] = useState<
     NotificationPermission | "loading"
   >("loading");
+
+  // Grab service worker registration
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator))
+      return;
+
+    (async () => {
+      setServiceWorkerRegistration(await navigator.serviceWorker.ready);
+    })();
+  }, [setServiceWorkerRegistration]);
 
   // Request permission to display notifications
   useEffect(() => {
@@ -21,19 +34,19 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
 
   // When permission granted, register subscription
   useEffect(() => {
+    // Don't attempt to register subscription if permission was not granted
     if (notificationPermStatus !== "granted") return;
-    if (typeof window === "undefined" || !("serviceWorker" in navigator))
-      return;
+
+    // Wait for service worker to be grabbed
+    if (serviceWorkerRegistration === null) return;
 
     (async () => {
-      // Grab service worker
-      const sw = await navigator.serviceWorker.ready;
-
       // Create or find push subscription
-      const subscription = await sw.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: vapidPublicKey,
-      });
+      const subscription =
+        await serviceWorkerRegistration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: vapidPublicKey,
+        });
       if (!subscription) console.error("No subscription found");
 
       // Register subscription
@@ -51,15 +64,17 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
         console.error(json);
       }
     })();
-  }, [notificationPermStatus]);
+  }, [serviceWorkerRegistration, notificationPermStatus]);
 
   return {
+    serviceWorkerRegistration,
     notificationPermissionStatus: notificationPermStatus,
   };
 };
 
 interface UseRequestPermissionsReturn {
+  serviceWorkerRegistration: ServiceWorkerRegistration | null;
   notificationPermissionStatus: NotificationPermission | "loading";
 }
 
-export default useRequestPermissions;
+export default useServiceWorker;
