@@ -13,6 +13,10 @@ const useServiceWorker = (): UseRequestPermissionsReturn => {
     NotificationPermission | "loading"
   >("loading");
 
+  const [subscriptionEndpoint, setSubscriptionEndpoint] = useState<
+    string | null
+  >(null);
+
   // Grab service worker registration
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator))
@@ -49,6 +53,8 @@ const useServiceWorker = (): UseRequestPermissionsReturn => {
         });
       if (!subscription) console.error("No subscription found");
 
+      setSubscriptionEndpoint(subscription.endpoint);
+
       // Register subscription
       const resp = await fetch("/api/register_subscription", {
         method: "POST",
@@ -64,17 +70,23 @@ const useServiceWorker = (): UseRequestPermissionsReturn => {
         console.error(json);
       }
     })();
-  }, [serviceWorkerRegistration, notificationPermStatus]);
+  }, [
+    serviceWorkerRegistration,
+    notificationPermStatus,
+    setSubscriptionEndpoint,
+  ]);
 
   return {
     serviceWorkerRegistration,
     notificationPermissionStatus: notificationPermStatus,
+    subscriptionEndpoint,
   };
 };
 
 interface UseRequestPermissionsReturn {
   serviceWorkerRegistration: ServiceWorkerRegistration | null;
   notificationPermissionStatus: NotificationPermission | "loading";
+  subscriptionEndpoint: string | null;
 }
 
 export default useServiceWorker;
