@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <GreetingContainer>
         <GradientTitle>Vibes</GradientTitle>
         <Subtitle>
-          All data is stored locally on your device for your privacy.
+          All vibe checks are stored locally for your privacy.
         </Subtitle>
       </GreetingContainer>
 
