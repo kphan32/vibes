@@ -37,7 +37,7 @@ const useRequestPermissions = (): UseRequestPermissionsReturn => {
       if (!subscription) console.error("No subscription found");
 
       // Register subscription
-      const resp = await fetch("/api/registerSubscription", {
+      const resp = await fetch("/api/register_subscription", {
         method: "POST",
         headers: {
           "Content-Type": "applcation/json",
