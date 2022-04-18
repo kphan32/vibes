@@ -4,29 +4,32 @@ import prismaClient from "../../db";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const subscriptionString = req.body;
+    const subscription: Subscription = JSON.parse(req.body);
+
     await prismaClient.subscription.upsert({
       where: {
-        subscriptionJson: req.body,
+        endpoint: subscription.endpoint,
       },
       update: {
         updatedAt: new Date(),
       },
       create: {
-        subscriptionJson: req.body,
+        endpoint: subscription.endpoint,
+        subscriptionString,
       },
     });
 
     return res.status(200).end();
   } catch (e) {
-    // Ignore unique-ness errors (row already exists)
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return res.status(200).end();
-    }
-
     console.error(e);
 
     return res.status(500).end();
   }
 };
+
+interface Subscription {
+  endpoint: string;
+}
 
 export default handler;
