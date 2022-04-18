@@ -14,7 +14,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let subscriptions: Subscription[] = [];
 
   try {
-    subscriptions = await prismaClient.subscription.findMany();
+    const utcHour = getClosestUTCHour();
+    const reminderTimes = await prismaClient.reminderTime.findMany({
+      where: {
+        hour: utcHour,
+      },
+      include: {
+        subscription: true,
+      },
+    });
+
+    subscriptions = reminderTimes.map(
+      (reminderTime) => reminderTime.subscription
+    );
   } catch (e) {
     if (e instanceof Error) {
       console.error("Error querying for subscriptions");
@@ -24,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   await Promise.all(
     subscriptions.map((subscription) => {
-      const subscriptionBody = JSON.parse(subscription.subscriptionJson);
+      const subscriptionBody = JSON.parse(subscription.subscriptionString);
 
       return webpush
         .sendNotification(
@@ -51,6 +63,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
 
   res.status(200).end();
+};
+
+// Get closest current hour in UTC time
+const getClosestUTCHour = (): number => {
+  const date = new Date();
+  date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
+
+  return date.getUTCHours();
 };
 
 export default handler;

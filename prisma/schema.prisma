@@ -30,6 +30,7 @@ model ReminderTime {
   subscription         Subscription @relation(fields: [subscriptionEndpoint], references: [endpoint])
   subscriptionEndpoint String       @map("subscription_endpoint")
 
+  // This hour should be in terms of UTC
   hour Int
 
   createdAt DateTime @default(now()) @map("created_at")
