@@ -16,7 +16,8 @@ model Subscription {
   endpoint           String @unique
   subscriptionString String @map("subscription_string")
 
-  reminderTimers ReminderTime[]
+  remindersEnabled Boolean        @default(false)
+  reminderTimers   ReminderTime[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
