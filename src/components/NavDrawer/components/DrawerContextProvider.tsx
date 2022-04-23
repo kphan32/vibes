@@ -1,6 +1,4 @@
-import { ReactNode } from "react";
-import { useState } from "react";
-import { FC } from "react";
+import { ReactNode, useState, FC } from "react";
 import DrawerContext from "../context/DrawerContext";
 
 interface DrawerContextProps {
