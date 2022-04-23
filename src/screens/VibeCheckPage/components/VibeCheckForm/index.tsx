@@ -1,9 +1,52 @@
 import useVibeChecks from "@/hooks/useVibeChecks";
-import moods from "@/meta/moods";
-import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
+import tw from "tailwind-styled-components";
+
+const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
+  const { addVibeCheck } = useVibeChecks();
+  const [showMoodWheel, setShowMoodWheel] = useState<boolean>(false);
+
+  const toggleMoodWheel = useCallback(
+    () => setShowMoodWheel((showMoodWheel) => !showMoodWheel),
+    [setShowMoodWheel]
+  );
+
+  return (
+    <div className="flex flex-col w-full h-full">
+      <p className="text-5xl font-bold pb-8">Vibe Check</p>
+
+      <Formik
+        initialValues={{
+          timestamp: new Date(),
+          moodScore: 5.0,
+          description: "",
+        }}
+        validate={() => []}
+        onSubmit={(entry, _) => {
+          addVibeCheck(entry);
+          setSubmitted(true);
+        }}
+      >
+        <Form className="w-full flex flex-col justify-center items-center space-y-8 pb-8">
+          <MoodSlider />
+          <DescriptionField />
+          <div>
+            <ShowMoodWheelButton
+              showMoodWheel={showMoodWheel}
+              toggleMoodWheel={toggleMoodWheel}
+            />
+            <MoodWheel visible={showMoodWheel}>
+              <img src="/images/mood_wheel.png" />
+            </MoodWheel>
+          </div>
+          <Submit />
+        </Form>
+      </Formik>
+    </div>
+  );
+};
 
 const MoodSlider = () => {
   return (
@@ -61,11 +104,14 @@ const Submit = () => {
 };
 
 interface MoreButtonProps {
-  showMoods: boolean;
-  toggleShowMoods: () => void;
+  showMoodWheel: boolean;
+  toggleMoodWheel: () => void;
 }
 
-const MoreButton: FC<MoreButtonProps> = ({ showMoods, toggleShowMoods }) => {
+const ShowMoodWheelButton: FC<MoreButtonProps> = ({
+  showMoodWheel: showMoodWheel,
+  toggleMoodWheel: toggleShowMoods,
+}) => {
   return (
     <div
       className={`
@@ -77,105 +123,37 @@ const MoreButton: FC<MoreButtonProps> = ({ showMoods, toggleShowMoods }) => {
       `}
       onClick={() => toggleShowMoods()}
     >
-      {!showMoods && (
+      {!showMoodWheel && (
         <>
-          Something more specific?
+          Not sure how you&apos;re feeling?
           <RiArrowDownSLine className="-my-1" />
         </>
       )}
-      {showMoods && (
+      {showMoodWheel && (
         <>
           <RiArrowDownSLine className="-my-1 rotate-180" />
-          Less specific
+          Close
         </>
       )}
     </div>
   );
 };
 
-interface MoodSelectionProps {
-  showMoods: boolean;
+const MoodWheel = tw.div<VisibleProps>`
+  w-64
+
+  overflow-visible
+
+  transition-all
+  ${(props: VisibleProps) => (props.visible ? "" : "hidden")}
+`;
+
+interface VisibleProps {
+  visible: boolean;
 }
-
-const MoodSelection: FC<MoodSelectionProps> = ({ showMoods }) => {
-  const rootMoods = (
-    <div className="flex flex-row flex-wrap w-72 justify-center cursor-pointer">
-      {moods.map((mood, i) => {
-        return (
-          <div
-            key={i}
-            className={`
-            w-32 h-12
-            m-2
-            flex justify-center items-center
-            border-2 rounded-md
-            hover:border-cyan-400
-            transition-color duration-300
-            `}
-          >
-            <p className="select-none">{mood.text}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-
-  return (
-    <div
-      className={clsx("overflow-hidden transition-all duration-500", {
-        "h-0 opacity-0": !showMoods,
-        "h-64 opacity-100": showMoods,
-      })}
-    >
-      {rootMoods}
-    </div>
-  );
-};
 
 interface VibeCheckFormProps {
   setSubmitted: Dispatch<SetStateAction<boolean>>;
 }
-
-const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
-  const { addVibeCheck } = useVibeChecks();
-  const [showMoods, setShowMoods] = useState<boolean>(false);
-
-  const toggleShowMoods = useCallback(
-    () => setShowMoods((showMoods) => !showMoods),
-    [setShowMoods]
-  );
-
-  return (
-    <div className="flex flex-col w-full h-full">
-      <p className="text-5xl font-bold pb-8">Vibe Check</p>
-
-      <Formik
-        initialValues={{
-          timestamp: new Date(),
-          moodScore: 5.0,
-          description: "",
-        }}
-        validate={() => []}
-        onSubmit={(entry, _) => {
-          addVibeCheck(entry);
-          setSubmitted(true);
-        }}
-      >
-        <Form className="w-full flex flex-col justify-center items-center space-y-8 pb-8">
-          <MoodSlider />
-          {/* <div className="space-y-2">
-            <MoreButton
-              showMoods={showMoods}
-              toggleShowMoods={toggleShowMoods}
-            />
-            <MoodSelection showMoods={showMoods} />
-          </div> */}
-          <DescriptionField />
-          <Submit />
-        </Form>
-      </Formik>
-    </div>
-  );
-};
 
 export default VibeCheckForm;
