@@ -53,7 +53,7 @@ const Reminders: FC = () => {
       <SettingsContainer visible={!loading}>
         <Title>Reminders</Title>
         <PaddedSubtitle>
-          Settings are stored remotely to support push notifications
+          Settings are stored remotely to support push notifications.
         </PaddedSubtitle>
 
         <EnabledHeader>
