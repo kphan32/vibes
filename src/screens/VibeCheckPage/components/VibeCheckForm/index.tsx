@@ -1,3 +1,4 @@
+import { Text } from "@/components/common";
 import useVibeChecks from "@/hooks/useVibeChecks";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
@@ -14,8 +15,8 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   );
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <p className="text-5xl font-bold pb-8">Vibe Check</p>
+    <Screen>
+      <Title>Vibe Check</Title>
 
       <Formik
         initialValues={{
@@ -44,9 +45,30 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
           <Submit />
         </Form>
       </Formik>
-    </div>
+    </Screen>
   );
 };
+
+const Screen = tw.div`
+  w-screen
+  h-screen
+
+  flex
+  flex-col
+  justify-start
+  items-center
+
+  overflow-scroll
+
+  pt-20
+`;
+
+const Title = tw(Text)`
+  text-5xl
+  font-bold
+
+  pb-6
+`;
 
 const MoodSlider = () => {
   return (
