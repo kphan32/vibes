@@ -1,32 +1,87 @@
-import { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import useReminderSettings from "../../hooks/useReminderSettings";
 
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
+import { Button } from "../../components/common";
+
+import { BiLoaderAlt } from "react-icons/bi";
+import { HiOutlineTrash } from "react-icons/hi";
+
+const periods = ["AM", "PM"];
+const hourNumbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const hours = periods.flatMap((period) =>
+  hourNumbers.map((hourNumber) => {
+    let value = (hourNumber % 12) + (period === "PM" ? 12 : 0);
+
+    // Conver to UTC hours
+    const date = new Date();
+    date.setHours(value);
+    value = date.getUTCHours();
+
+    return {
+      text: `${hourNumber}${period}`,
+      value,
+    };
+  })
+);
 
 const Settings: FC = () => {
-  const { enabled, setEnabled } = useReminderSettings();
+  const { loading, enabled, hoursEnabled, setEnabled, addHour, removeHour } =
+    useReminderSettings();
+
+  const [selectedHour, setSelectedHour] = useState(0);
+
+  useEffect(() => setSelectedHour(hours[0].value), []);
 
   return (
-    <Container>
-      <Title>Settings</Title>
-      <SettingsContainer>
-        <RemindersContainer>
-          <RemindersHeaderContainer>
-            <SettingLabel>Reminders</SettingLabel>
-            <Toggle
-              onChange={(e) => setEnabled(e.target.checked)}
-              checked={enabled}
-            />
-          </RemindersHeaderContainer>
-        </RemindersContainer>
+    <Screen>
+      <Loading visible={loading} />
+      <SettingsContainer visible={!loading}>
+        <Title>Settings</Title>
+        <RemindersHeader>
+          <SettingLabel>Reminders</SettingLabel>
+          <Toggle
+            onChange={(e) => setEnabled(e.target.checked)}
+            checked={enabled}
+          />
+        </RemindersHeader>
+
+        <Reminders enabled={enabled}>
+          <AddHour>
+            <AddButton onClick={() => addHour(selectedHour)}>Add</AddButton>
+            <HourSelect
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                e.preventDefault();
+                setSelectedHour(Number.parseInt(e.target.value));
+              }}
+            >
+              {hours.map((hour) => (
+                <option key={hour.value} value={hour.value}>
+                  {hour.text}
+                </option>
+              ))}
+            </HourSelect>
+          </AddHour>
+
+          <HoursEnabled visible={hoursEnabled.length > 0}>
+            {hoursEnabled.map((hourEnabled) => (
+              <HourEnabled key={hourEnabled.utcHour}>
+                <HourEnabledLabel>{hourEnabled.localizedHour}</HourEnabledLabel>
+                <DeleteHourButton
+                  onClick={() => removeHour(hourEnabled.utcHour)}
+                />
+              </HourEnabled>
+            ))}
+          </HoursEnabled>
+        </Reminders>
       </SettingsContainer>
-    </Container>
+    </Screen>
   );
 };
 
-const Container = tw.div`
+const Screen = tw.div`
   w-screen
   h-screen
 
@@ -36,6 +91,23 @@ const Container = tw.div`
   items-center
 
   pt-20
+`;
+
+const Loading = tw(BiLoaderAlt)<VisibleProps>`
+  fixed
+
+  m-auto
+  inset-0
+
+  w-32
+  h-32
+
+  text-gray-200
+
+  animate-spin
+
+  transition-all
+  ${(props: VisibleProps) => (props.visible ? "opacity-100" : "opacity-0")}
 `;
 
 const Title = tw.p`
@@ -50,7 +122,7 @@ const SettingLabel = tw.p`
   font-semibold
 `;
 
-const SettingsContainer = tw.div`
+const SettingsContainer = tw.div<VisibleProps>`
   w-64
   md:w-96
 
@@ -58,19 +130,93 @@ const SettingsContainer = tw.div`
   flex-col
   justify-start
   items-center
+
+  transition-all
+  ${(props: VisibleProps) => (props.visible ? "opacity-100" : "opacity-0")}
 `;
 
-const RemindersContainer = tw.div`
+const Reminders = tw.div`
   w-full
+
+  ${(props: EnabledProps) =>
+    props.enabled ? "opacity-100" : "opacity-50 pointer-events-none"}
+
+  transition-all
 `;
 
-const RemindersHeaderContainer = tw.div`
+const RemindersHeader = tw.div`
   w-full
+
   flex
   place-content-between
 
-  px-2
   mb-2
 `;
+
+const AddHour = tw.div`
+  w-full
+
+  flex
+  place-content-between
+`;
+
+const AddButton = tw(Button)`
+  mr-4
+  flex-1
+`;
+
+const HourSelect = tw.select`
+  p-2
+
+  border-2
+  rounded-md
+  border-gray-400
+`;
+
+const HoursEnabled = tw.div<VisibleProps>`
+  w-full
+
+  mt-4
+
+  flex
+  flex-col
+  divide-y
+
+  border-2
+  border-gray-400
+  rounded-md
+
+  ${(props: VisibleProps) => (props.visible ? "" : "invisible")}
+`;
+
+const HourEnabled = tw.div`
+  w-full
+
+  flex
+  items-center
+  place-content-between
+`;
+
+const HourEnabledLabel = tw.p`
+  px-4
+  py-4
+`;
+
+const DeleteHourButton = tw(HiOutlineTrash)`
+  mr-4
+
+  w-6
+  h-full
+
+  text-red-600
+`;
+
+interface EnabledProps {
+  enabled: boolean;
+}
+
+interface VisibleProps {
+  visible: boolean;
+}
 
 export default Settings;
