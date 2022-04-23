@@ -68,6 +68,7 @@ const SlideUp = tw.div<VisibleProps>`
 
 const BackgroundArea = tw.div`
   absolute
+  z-0
   left-0
   top-0
 
@@ -78,22 +79,21 @@ const BackgroundArea = tw.div`
 `;
 
 const Card = tw.div`
+  z-10
+
   flex-1
 
-  m-10
   mt-24
   p-4
 
   flex
   flex-col
 
-  ring-2
-
-  rounded-lg
+  rounded-t-3xl
 
   bg-white
 
-  drop-shadow-lg
+  shadow
 `;
 
 const Header = tw.div`
@@ -158,6 +158,8 @@ const Body = tw.textarea`
 const CloseButton = tw(HiX)`
   w-12
   h-12
+
+  mt-2
 
   place-self-center
 
