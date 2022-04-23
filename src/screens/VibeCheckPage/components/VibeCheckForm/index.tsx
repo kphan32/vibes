@@ -1,9 +1,12 @@
 import { Text } from "@/components/common";
 import useVibeChecks from "@/hooks/useVibeChecks";
 import { Field, Form, Formik } from "formik";
+import Zoom from "react-medium-image-zoom";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import tw from "tailwind-styled-components";
+
+import "react-medium-image-zoom/dist/styles.css";
 
 const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
@@ -13,16 +16,6 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
     () => setShowMoodWheel((showMoodWheel) => !showMoodWheel),
     [setShowMoodWheel]
   );
-
-  const [moodWheelZoom, setMoodWheelZoom] = useState(1);
-
-  const handleMoodWheelClick = () => {
-    if (moodWheelZoom === 1) {
-      setMoodWheelZoom(2);
-    } else {
-      setMoodWheelZoom(1);
-    }
-  };
 
   return (
     <Screen>
@@ -48,12 +41,10 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
               showMoodWheel={showMoodWheel}
               toggleMoodWheel={toggleMoodWheel}
             />
-            <MoodWheel
-              visible={showMoodWheel}
-              zoom={moodWheelZoom}
-              onClick={handleMoodWheelClick}
-            >
-              <img src="/images/mood_wheel.png" />
+            <MoodWheel visible={showMoodWheel}>
+              <Zoom>
+                <img src="/images/mood_wheel.png" />
+              </Zoom>
             </MoodWheel>
           </div>
           <Submit />
@@ -176,22 +167,19 @@ const ShowMoodWheelButton: FC<MoreButtonProps> = ({
   );
 };
 
-const MoodWheel = tw.div<MoodWheelProps>`
+const MoodWheel = tw.div<VisibleProps>`
   z-50
 
   w-64
 
   overflow-visible
 
-  ${(props: MoodWheelProps) => `scale-[${props.zoom}]`}
-
   transition-all
-  ${(props: MoodWheelProps) => (props.visible ? "" : "hidden")}
+  ${(props: VisibleProps) => (props.visible ? "" : "hidden")}
 `;
 
-interface MoodWheelProps {
+interface VisibleProps {
   visible: boolean;
-  zoom: number;
 }
 
 interface VibeCheckFormProps {
