@@ -1,145 +1,188 @@
+import { Text } from "@/components/common";
 import VibeCheck from "@/types/vibeCheck";
 import { emojiFor } from "@/utils/emoji";
-import clsx from "clsx";
-import { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { HiOutlineTrash, HiX } from "react-icons/hi";
-
-interface CardProps {
-  children: ReactNode;
-}
-
-const Card: FC<CardProps> = ({ children }) => {
-  return (
-    <div
-      className={clsx(`
-        flex-1
-        m-10
-        p-4
-        ring-2
-        rounded-lg
-        bg-white
-        drop-shadow-lg
-      `)}
-    >
-      {children}
-    </div>
-  );
-};
-
-interface VibeCheckInfoProps {
-  inVibeCheck: VibeCheck | null;
-  close: () => void;
-  setToDelete: (vibeCheck: VibeCheck) => void;
-}
-
-const VibeCheckInfo: FC<VibeCheckInfoProps> = ({
-  inVibeCheck,
-  close,
-  setToDelete,
-}) => {
-  const [vibeCheck, setDebVibeCheck] = useState<VibeCheck | null>(null);
-
-  useEffect(() => {
-    if (inVibeCheck !== null) {
-      setDebVibeCheck(inVibeCheck);
-    }
-  }, [inVibeCheck]);
-
-  if (vibeCheck === null) {
-    return <div />;
-  }
-
-  const timestamp = new Date(vibeCheck.timestamp);
-
-  return (
-    <div className="h-full flex flex-col">
-      <div className="flex flex-row justify-between items-center">
-        <p className="w-12 h-12 text-4xl self-start drop-shadow-md">
-          {emojiFor(vibeCheck.moodScore)}
-        </p>
-        <div>
-          <p className={clsx(`text-sm text-gray-500`)}>
-            {timestamp.toLocaleString("en-US", {
-              timeStyle: "short",
-              dateStyle: "short",
-            })}
-            12
-          </p>
-        </div>
-        <HiOutlineTrash
-          className={clsx(
-            `w-8 h-8 m-2 cursor-pointer text-gray-400 hover:text-red-500 drop-shadow-sm transition-colors`
-          )}
-          onClick={(e) => {
-            setToDelete(vibeCheck);
-            close();
-            e.stopPropagation();
-          }}
-        />
-      </div>
-      <div className="flex-1 p-2">
-        <textarea
-          readOnly={true}
-          className={`
-            w-full h-full
-            p-2
-            rounded-md
-            border-2
-            bg-gray-50
-            shadow-sm
-            focus:outline-none
-            resize-none
-            cursor-default
-          `}
-          value={vibeCheck.description}
-        ></textarea>
-      </div>
-      <div className="h-12 flex justify-center items-center">
-        <HiX
-          className="w-12 h-12 text-gray-400 hover:text-gray-600 drop-shadow-md transition-colors cursor-pointer"
-          onClick={close}
-        />
-      </div>
-    </div>
-  );
-};
-
-interface ViewVibeCheckProps {
-  vibeCheck: VibeCheck | null;
-  closeVibeCheck: () => void;
-  setToDelete: (vibeCheck: VibeCheck) => void;
-}
+import tw from "tailwind-styled-components";
 
 const ViewVibeCheck: FC<ViewVibeCheckProps> = ({
   vibeCheck,
   closeVibeCheck,
   setToDelete,
 }) => {
+  const visible = vibeCheck !== null;
+
+  // Tracking the last vibe check opened prevents the card details from
+  // disappearing when closing.
+  const [lastVibeCheck, setLastVibeCheck] = useState<VibeCheck | null>(null);
+  useEffect(() => {
+    if (vibeCheck !== null) {
+      setLastVibeCheck(vibeCheck);
+    }
+  }, [vibeCheck]);
+
+  const timestampText = !!lastVibeCheck
+    ? new Date(lastVibeCheck.timestamp).toLocaleString("en-US", {
+        timeStyle: "short",
+        dateStyle: "short",
+      })
+    : "";
+
   return (
-    <div
-      className={clsx(
-        `
-        fixed top-0 left-0
-        w-screen h-screen
-        flex flex-col
-        transition-all
-        duration-700
-      `,
-        {
-          "translate-y-[100vh]": vibeCheck === null,
-        }
-      )}
-    >
-      <div className="h-12 bg-transparent" onClick={closeVibeCheck} />
+    <SlideUp visible={visible}>
+      <BackgroundArea onClick={closeVibeCheck} />
       <Card>
-        <VibeCheckInfo
-          inVibeCheck={vibeCheck}
-          close={closeVibeCheck}
-          setToDelete={setToDelete}
-        />
+        <Header>
+          <MoodIcon>{emojiFor(lastVibeCheck?.moodScore || 0)}</MoodIcon>
+
+          <TimestampText>{timestampText}</TimestampText>
+
+          <DeleteButton
+            onClick={(e: React.ChangeEvent) => {
+              if (!lastVibeCheck) return;
+
+              setToDelete(lastVibeCheck);
+              close();
+              e.stopPropagation();
+            }}
+          />
+        </Header>
+
+        <Body readOnly={true} value={lastVibeCheck?.description || ""} />
+
+        <CloseButton onClick={closeVibeCheck} />
       </Card>
-    </div>
+    </SlideUp>
   );
 };
+
+const SlideUp = tw.div<VisibleProps>`
+  fixed top-0 left-0
+  w-screen h-screen
+  flex flex-col
+  transition-all
+  duration-700
+
+  ${({ visible }: VisibleProps) => (visible ? "" : "translate-y-[100vh]")}
+`;
+
+const BackgroundArea = tw.div`
+  absolute
+  left-0
+  top-0
+
+  w-screen
+  h-screen
+
+  bg-transparent
+`;
+
+const Card = tw.div`
+  flex-1
+
+  m-10
+  mt-24
+  p-4
+
+  flex
+  flex-col
+
+  ring-2
+
+  rounded-lg
+
+  bg-white
+
+  drop-shadow-lg
+`;
+
+const Header = tw.div`
+  flex
+  flex-row
+  justify-between
+  items-center
+`;
+
+const MoodIcon = tw(Text)`
+  w-12
+  h-12
+
+  text-4xl
+
+  self-start
+
+  drop-shadow-md
+`;
+
+const TimestampText = tw(Text)`
+  text-sm
+  text-gray-500
+`;
+
+const DeleteButton = tw(HiOutlineTrash)`
+  w-8
+  h-8
+
+  m-2
+
+  text-gray-400
+  hover:text-red-500
+
+  drop-shadow-sm
+
+  transition-colors
+
+  cursor-pointer
+`;
+
+const Body = tw.textarea`
+  flex-1
+
+  m-2
+  p-2
+
+  rounded-md
+  border-2
+
+  bg-gray-50
+
+  shadow-sm
+
+  focus:outline-none
+
+  resize-none
+
+  cursor-default
+`;
+
+const CloseButton = tw(HiX)`
+  w-12
+  h-12
+
+  place-self-center
+
+  text-gray-400
+  hover:text-gray-600 
+
+  drop-shadow-md
+
+  active:translate-y-1
+  active:drop-shadow-lg
+  active:drop-shadow-gray-200/50
+
+  transition-all
+
+  cursor-pointer
+`;
+
+interface VisibleProps {
+  visible: boolean;
+}
+
+interface ViewVibeCheckProps {
+  vibeCheck: VibeCheck | null;
+  closeVibeCheck: () => void;
+  setToDelete: (vibeCheck: VibeCheck) => void;
+}
 
 export default ViewVibeCheck;
