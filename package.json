@@ -2,6 +2,7 @@
   "name": "nextjs-typescript-tailwindcss-pwa",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
