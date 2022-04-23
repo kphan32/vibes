@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prismaClient from "../../../db";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     const body: PutAddHourRequestBody = JSON.parse(req.body);
 
     try {
