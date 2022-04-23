@@ -18,6 +18,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const reminderTimes = await prismaClient.reminderTime.findMany({
       where: {
         hour: utcHour,
+        subscription: {
+          remindersEnabled: true,
+        },
       },
       include: {
         subscription: true,
