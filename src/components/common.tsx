@@ -23,7 +23,7 @@ const Button = tw.button`
   px-4
   py-2
 
-  text-gray-400
+  text-gray-900
 
   rounded-md
 
