@@ -7,6 +7,7 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import tw from "tailwind-styled-components";
 
 import "react-medium-image-zoom/dist/styles.css";
+import Image from "next/image";
 
 const VibeCheckForm: FC<VibeCheckFormProps> = ({ submitted, setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
@@ -43,7 +44,12 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ submitted, setSubmitted }) => {
             />
             <MoodWheel visible={showMoodWheel}>
               <Zoom>
-                <img src="/images/mood_wheel.png" />
+                <Image
+                  width={1000}
+                  height={1000}
+                  src="/images/mood_wheel.png"
+                  alt="mood wheel"
+                />
               </Zoom>
             </MoodWheel>
           </div>
@@ -174,11 +180,12 @@ const MoodWheel = tw.div<VisibleProps>`
   z-50
 
   w-64
+  h-64
 
   overflow-visible
 
   transition-all
-  ${(props: VisibleProps) => (props.visible ? "" : "hidden")}
+  ${(props: VisibleProps) => (props.visible ? "" : "h-0 overflow-hidden")}
 `;
 
 interface VisibleProps {
