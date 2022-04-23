@@ -42,7 +42,7 @@ const ViewVibeCheck: FC<ViewVibeCheckProps> = ({
               if (!lastVibeCheck) return;
 
               setToDelete(lastVibeCheck);
-              close();
+              closeVibeCheck();
               e.stopPropagation();
             }}
           />
