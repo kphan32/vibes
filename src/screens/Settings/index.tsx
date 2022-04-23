@@ -169,6 +169,8 @@ const HourSelect = tw.select`
   border-2
   rounded-md
   border-gray-400
+
+  background-white
 `;
 
 const HoursEnabled = tw.div<VisibleProps>`
