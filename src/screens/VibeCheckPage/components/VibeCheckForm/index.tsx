@@ -14,6 +14,16 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
     [setShowMoodWheel]
   );
 
+  const [moodWheelZoom, setMoodWheelZoom] = useState(1);
+
+  const handleMoodWheelClick = () => {
+    if (moodWheelZoom === 1) {
+      setMoodWheelZoom(2);
+    } else {
+      setMoodWheelZoom(1);
+    }
+  };
+
   return (
     <Screen>
       <Title>Vibe Check</Title>
@@ -38,7 +48,11 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
               showMoodWheel={showMoodWheel}
               toggleMoodWheel={toggleMoodWheel}
             />
-            <MoodWheel visible={showMoodWheel}>
+            <MoodWheel
+              visible={showMoodWheel}
+              zoom={moodWheelZoom}
+              onClick={handleMoodWheelClick}
+            >
               <img src="/images/mood_wheel.png" />
             </MoodWheel>
           </div>
@@ -58,7 +72,8 @@ const Screen = tw.div`
   justify-start
   items-center
 
-  overflow-scroll
+  overflow-x-hidden
+  overflow-scroll-y
 
   pt-20
 `;
@@ -161,17 +176,22 @@ const ShowMoodWheelButton: FC<MoreButtonProps> = ({
   );
 };
 
-const MoodWheel = tw.div<VisibleProps>`
+const MoodWheel = tw.div<MoodWheelProps>`
+  z-50
+
   w-64
 
   overflow-visible
 
+  ${(props: MoodWheelProps) => `scale-[${props.zoom}]`}
+
   transition-all
-  ${(props: VisibleProps) => (props.visible ? "" : "hidden")}
+  ${(props: MoodWheelProps) => (props.visible ? "" : "hidden")}
 `;
 
-interface VisibleProps {
+interface MoodWheelProps {
   visible: boolean;
+  zoom: number;
 }
 
 interface VibeCheckFormProps {
