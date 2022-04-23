@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prismaClient from "../../db";
 
 import webpush from "web-push";
 import { Subscription } from "@prisma/client";
+import prismaClient from "@/db";
 
 webpush.setVapidDetails(
   "https://serviceworke.rs/",

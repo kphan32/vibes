@@ -1,5 +1,5 @@
+import prismaClient from "@/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import prismaClient from "../../db";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

@@ -1,3 +1,3 @@
-import VibeCheckPage from "../screens/VibeCheckPage";
+import VibeCheckPage from "@/screens/VibeCheckPage";
 
 export default VibeCheckPage;

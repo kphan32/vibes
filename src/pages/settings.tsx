@@ -1,3 +1,3 @@
-import Settings from "../screens/Settings";
+import Settings from "@/screens/Settings";
 
 export default Settings;

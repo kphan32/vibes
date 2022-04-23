@@ -1,5 +1,5 @@
+import VibeCheck from "@/types/vibeCheck";
 import { useCallback } from "react";
-import VibeCheck from "../types/vibeCheck";
 import useLocalStorage from "./useLocalStorage";
 
 const useVibeChecks = () => {

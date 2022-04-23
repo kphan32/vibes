@@ -1,13 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
-import useReminderSettings from "../../hooks/useReminderSettings";
-
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
-import { Button } from "../../components/common";
-
 import { BiLoaderAlt } from "react-icons/bi";
 import { HiOutlineTrash } from "react-icons/hi";
+import { Button } from "@/components/common";
+import useReminderSettings from "@/hooks/useReminderSettings";
 
 const periods = ["AM", "PM"];
 const hourNumbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];

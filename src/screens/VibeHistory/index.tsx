@@ -1,11 +1,11 @@
+import useVibeChecks from "@/hooks/useVibeChecks";
+import VibeCheck from "@/types/vibeCheck";
+import { emojiFor } from "@/utils/emoji";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { FC, useMemo, useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
-import useVibeChecks from "../../hooks/useVibeChecks";
-import VibeCheck from "../../types/vibeCheck";
-import { emojiFor } from "../../utils/emoji";
 import ViewVibeCheck from "./components/ViewVibeCheck";
 
 interface VibeCheckEntryProps {

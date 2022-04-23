@@ -1,9 +1,9 @@
+import useVibeChecks from "@/hooks/useVibeChecks";
+import moods from "@/meta/moods";
 import clsx from "clsx";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
-import useVibeChecks from "../../../../hooks/useVibeChecks";
-import moods, { MoodNode } from "../../../../meta/moods";
 
 const MoodSlider = () => {
   return (

@@ -1,3 +1,3 @@
-import VibeHistory from "../screens/VibeHistory";
+import VibeHistory from "@/screens/VibeHistory";
 
 export default VibeHistory;

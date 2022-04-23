@@ -1,6 +1,6 @@
 import { FC } from "react";
 import clsx from "clsx";
-import useNavDrawerContext from "../../../hooks/useNavDrawerContext";
+import useNavDrawerContext from "@/components/NavDrawer/hooks/useNavDrawerContext";
 
 interface DrawerItemLabelProps {
   label: string;

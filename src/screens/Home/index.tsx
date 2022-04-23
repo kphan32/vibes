@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import useHome from "./hooks/useHome";
 import tw from "tailwind-styled-components";
 import {
   GradientButton,
   GradientTitle,
   Subtitle,
 } from "../../components/common";
+import useHome from "./hooks/useHome";
 
 const Home: NextPage = () => {
   const { gotoVibeCheck } = useHome();

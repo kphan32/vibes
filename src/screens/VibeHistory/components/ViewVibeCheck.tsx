@@ -1,8 +1,8 @@
+import VibeCheck from "@/types/vibeCheck";
+import { emojiFor } from "@/utils/emoji";
 import clsx from "clsx";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { HiOutlineTrash, HiX } from "react-icons/hi";
-import VibeCheck from "../../../types/vibeCheck";
-import { emojiFor } from "../../../utils/emoji";
 
 interface CardProps {
   children: ReactNode;

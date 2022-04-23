@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 import NavDrawer from "./NavDrawer";
 import DrawerContextProvider from "./NavDrawer/components/DrawerContextProvider";

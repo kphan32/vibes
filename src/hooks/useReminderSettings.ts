@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
 import {
   GetRemindersResponse,
   PutRemindersRequestBody,
-} from "../pages/api/reminders";
-import { PutAddHourRequestBody } from "../pages/api/reminders/add_hour";
-import { PutRemoveHourRequestBody } from "../pages/api/reminders/remove_hour";
+} from "@/pages/api/reminders";
+import { PutAddHourRequestBody } from "@/pages/api/reminders/add_hour";
+import { PutRemoveHourRequestBody } from "@/pages/api/reminders/remove_hour";
+import { useEffect, useMemo, useState } from "react";
 import useServiceWorker from "./useServiceWorker";
 
 const useReminderSettings = () => {

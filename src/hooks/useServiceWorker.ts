@@ -1,5 +1,5 @@
+import base64ToUint8Array from "@/utils/base64_to_uint8_array";
 import { useEffect, useState } from "react";
-import base64ToUint8Array from "../utils/base64_to_uint8_array";
 
 const vapidPublicKey = base64ToUint8Array(
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!!
