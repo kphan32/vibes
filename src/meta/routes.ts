@@ -1,8 +1,7 @@
 import { IconType } from "react-icons";
 import { HiOutlineHome } from "react-icons/hi";
 import { TiWavesOutline } from "react-icons/ti";
-import { BiHistory } from "react-icons/bi";
-import { FiSettings } from "react-icons/fi";
+import { BiHistory, BiBell } from "react-icons/bi";
 
 interface Route {
   name: string;
@@ -28,13 +27,13 @@ const VIBE_HISTORY = {
   icon: BiHistory,
 };
 
-const SETTINGS = {
-  name: "Settings",
-  path: "/settings",
-  icon: FiSettings,
+const REMINDERS = {
+  name: "Reminders",
+  path: "/reminders",
+  icon: BiBell,
 };
 
-const ROUTES: Route[] = [HOME, VIBE_CHECK, VIBE_HISTORY, SETTINGS];
+const ROUTES: Route[] = [HOME, VIBE_CHECK, VIBE_HISTORY, REMINDERS];
 
 export default ROUTES;
 

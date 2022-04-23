@@ -25,7 +25,7 @@ const hours = periods.flatMap((period) =>
   })
 );
 
-const Settings: FC = () => {
+const Reminders: FC = () => {
   const {
     loading,
     notificationPermissionStatus,
@@ -51,20 +51,20 @@ const Settings: FC = () => {
       <Loading visible={notificationsPermitted && loading} />
 
       <SettingsContainer visible={!loading}>
-        <Title>Settings</Title>
+        <Title>Reminders</Title>
         <PaddedSubtitle>
-          Reminder settings are stored remotely to support push notifications
+          Settings are stored remotely to support push notifications
         </PaddedSubtitle>
 
-        <RemindersHeader>
-          <SettingLabel>Reminders</SettingLabel>
+        <EnabledHeader>
+          <EnabledLabel>Enabled</EnabledLabel>
           <Toggle
             onChange={(e) => setEnabled(e.target.checked)}
             checked={enabled}
           />
-        </RemindersHeader>
+        </EnabledHeader>
 
-        <Reminders enabled={enabled}>
+        <Settings enabled={enabled}>
           <AddHour>
             <AddButton onClick={() => addHour(selectedHour)}>Add</AddButton>
 
@@ -93,7 +93,7 @@ const Settings: FC = () => {
               </HourEnabled>
             ))}
           </HoursEnabled>
-        </Reminders>
+        </Settings>
       </SettingsContainer>
     </Screen>
   );
@@ -146,7 +146,7 @@ const PaddedSubtitle = tw(Subtitle)`
   pb-8
 `;
 
-const SettingLabel = tw(Text)`
+const EnabledLabel = tw(Text)`
   text-lg
   font-semibold
 `;
@@ -164,7 +164,7 @@ const SettingsContainer = tw.div<VisibleProps>`
   ${(props: VisibleProps) => (props.visible ? "opacity-100" : "opacity-0")}
 `;
 
-const Reminders = tw.div`
+const Settings = tw.div`
   w-full
 
   ${(props: EnabledProps) =>
@@ -173,7 +173,7 @@ const Reminders = tw.div`
   transition-all
 `;
 
-const RemindersHeader = tw.div`
+const EnabledHeader = tw.div`
   w-full
 
   flex
@@ -250,4 +250,4 @@ interface VisibleProps {
   visible: boolean;
 }
 
-export default Settings;
+export default Reminders;
