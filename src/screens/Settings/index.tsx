@@ -4,7 +4,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { BiLoaderAlt } from "react-icons/bi";
 import { HiOutlineTrash } from "react-icons/hi";
-import { Button } from "@/components/common";
+import { Button, Text } from "@/components/common";
 import useReminderSettings from "@/hooks/useReminderSettings";
 
 const periods = ["AM", "PM"];
@@ -36,8 +36,10 @@ const Settings: FC = () => {
   return (
     <Screen>
       <Loading visible={loading} />
+
       <SettingsContainer visible={!loading}>
         <Title>Settings</Title>
+
         <RemindersHeader>
           <SettingLabel>Reminders</SettingLabel>
           <Toggle
@@ -49,6 +51,7 @@ const Settings: FC = () => {
         <Reminders enabled={enabled}>
           <AddHour>
             <AddButton onClick={() => addHour(selectedHour)}>Add</AddButton>
+
             <HourSelect
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 e.preventDefault();
@@ -67,6 +70,7 @@ const Settings: FC = () => {
             {hoursEnabled.map((hourEnabled) => (
               <HourEnabled key={hourEnabled.utcHour}>
                 <HourEnabledLabel>{hourEnabled.localizedHour}</HourEnabledLabel>
+
                 <DeleteHourButton
                   onClick={() => removeHour(hourEnabled.utcHour)}
                 />
@@ -108,14 +112,14 @@ const Loading = tw(BiLoaderAlt)<VisibleProps>`
   ${(props: VisibleProps) => (props.visible ? "opacity-100" : "opacity-0")}
 `;
 
-const Title = tw.p`
+const Title = tw(Text)`
   text-5xl
   font-bold
 
   pb-6
 `;
 
-const SettingLabel = tw.p`
+const SettingLabel = tw(Text)`
   text-lg
   font-semibold
 `;
@@ -197,7 +201,7 @@ const HourEnabled = tw.div`
   place-content-between
 `;
 
-const HourEnabledLabel = tw.p`
+const HourEnabledLabel = tw(Text)`
   px-4
   py-4
 `;
