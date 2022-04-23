@@ -21,7 +21,8 @@ const Button = tw(Text)<VisibleProps>`
   hover:text-gray-600
 
   transition-all
-  ${({ visible }: VisibleProps) => (visible ? "opacity-100" : "opacity-0")}
+  ${({ visible }: VisibleProps) =>
+    visible ? "opacity-100" : "opacity-0 pointer-events-none"}
 
   cursor-pointer
 `;
