@@ -7,6 +7,8 @@ text-gray-800
 const Subtitle = tw(Text)`
   mt-2
 
+  text-center
+
   text-gray-400
 `;
 

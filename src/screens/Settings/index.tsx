@@ -4,7 +4,7 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { BiLoaderAlt } from "react-icons/bi";
 import { HiOutlineTrash } from "react-icons/hi";
-import { Button, Text } from "@/components/common";
+import { Button, Subtitle, Text } from "@/components/common";
 import useReminderSettings from "@/hooks/useReminderSettings";
 
 const periods = ["AM", "PM"];
@@ -39,6 +39,9 @@ const Settings: FC = () => {
 
       <SettingsContainer visible={!loading}>
         <Title>Settings</Title>
+        <PaddedSubtitle>
+          Reminder settings are stored remotely to support push notifications
+        </PaddedSubtitle>
 
         <RemindersHeader>
           <SettingLabel>Reminders</SettingLabel>
@@ -117,6 +120,10 @@ const Title = tw(Text)`
   font-bold
 
   pb-6
+`;
+
+const PaddedSubtitle = tw(Subtitle)`
+  pb-8
 `;
 
 const SettingLabel = tw(Text)`
