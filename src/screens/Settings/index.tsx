@@ -26,8 +26,17 @@ const hours = periods.flatMap((period) =>
 );
 
 const Settings: FC = () => {
-  const { loading, enabled, hoursEnabled, setEnabled, addHour, removeHour } =
-    useReminderSettings();
+  const {
+    loading,
+    notificationPermissionStatus,
+    enabled,
+    hoursEnabled,
+    setEnabled,
+    addHour,
+    removeHour,
+  } = useReminderSettings();
+
+  const notificationsPermitted = notificationPermissionStatus === "granted";
 
   const [selectedHour, setSelectedHour] = useState(0);
 
@@ -35,7 +44,11 @@ const Settings: FC = () => {
 
   return (
     <Screen>
-      <Loading visible={loading} />
+      <EnableNotificationsText visible={!notificationsPermitted}>
+        Enable notifications to use reminders
+      </EnableNotificationsText>
+
+      <Loading visible={notificationsPermitted && loading} />
 
       <SettingsContainer visible={!loading}>
         <Title>Settings</Title>
@@ -96,6 +109,13 @@ const Screen = tw.div`
   items-center
 
   pt-20
+`;
+
+const EnableNotificationsText = tw(Subtitle)<VisibleProps>`
+  text-lg
+
+  transition-all
+  ${({ visible }: VisibleProps) => (visible ? "opacity-100" : "opacity-0")}
 `;
 
 const Loading = tw(BiLoaderAlt)<VisibleProps>`

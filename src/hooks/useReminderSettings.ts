@@ -8,7 +8,8 @@ import { useEffect, useMemo, useState } from "react";
 import useServiceWorker from "./useServiceWorker";
 
 const useReminderSettings = () => {
-  const { subscriptionEndpoint } = useServiceWorker();
+  const { subscriptionEndpoint, notificationPermissionStatus } =
+    useServiceWorker();
 
   const [loading, setLoading] = useState(true);
 
@@ -145,6 +146,7 @@ const useReminderSettings = () => {
 
   return {
     loading,
+    notificationPermissionStatus,
     enabled: !!enabled,
     setEnabled: updateEnabled,
     hoursEnabled,
