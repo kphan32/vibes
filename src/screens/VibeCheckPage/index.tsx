@@ -8,7 +8,7 @@ const VibeCheckPage: NextPage = () => {
 
   return (
     <div>
-      <VibeCheckForm setSubmitted={setSubmitted} />
+      <VibeCheckForm submitted={submitted} setSubmitted={setSubmitted} />
       <Done submitted={submitted} />
     </div>
   );

@@ -8,7 +8,7 @@ import tw from "tailwind-styled-components";
 
 import "react-medium-image-zoom/dist/styles.css";
 
-const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
+const VibeCheckForm: FC<VibeCheckFormProps> = ({ submitted, setSubmitted }) => {
   const { addVibeCheck } = useVibeChecks();
   const [showMoodWheel, setShowMoodWheel] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ const VibeCheckForm: FC<VibeCheckFormProps> = ({ setSubmitted }) => {
   );
 
   return (
-    <Screen>
+    <Screen visible={!submitted}>
       <Title>Vibe Check</Title>
 
       <Formik
@@ -67,6 +67,9 @@ const Screen = tw.div`
   overflow-scroll-y
 
   pt-20
+
+  transition-all
+  ${(props: VisibleProps) => (props.visible ? "opacity-100" : "opacity-0")}
 `;
 
 const Title = tw(Text)`
@@ -183,6 +186,7 @@ interface VisibleProps {
 }
 
 interface VibeCheckFormProps {
+  submitted: boolean;
   setSubmitted: Dispatch<SetStateAction<boolean>>;
 }
 
